@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./uploadapp.css";
-import Applogo1 from '../../assets/user-1.png';
+import Applogo1 from '../../assets/Assets/leafylogo.jpg';
 import Applogo2 from '../../assets/Assets/drfruitslogo.jpeg';
 import Downloadpng from '../../assets/download.png';
 import Backarow from '../../assets/backarrow.png';
@@ -105,7 +105,7 @@ const Uploadapp = () => {
             <p className="app-description">
               A brief, engaging description of the app goes here, highlighting key features and attracting users to download it.
             </p>
-            <a href="https://drive.google.com/uc?export=download&id=1xp2imvB_4qxr_OP5V7AXQV-c0GMJXWbZ" download className="download-btn">
+            <a href="https://drive.google.com/uc?export=download&id=1tUEH1hGW76x9h38rlzIQ8p0_kdN48Q8G" download className="download-btn">
               <span className="download-icon"><img src={Downloadpng} alt="logo" id='downloadicon' /></span>Get App
             </a>
           </div>
