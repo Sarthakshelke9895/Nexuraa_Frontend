@@ -3,6 +3,8 @@ import './App.css'; // Optional, for global styles
 import Home from './Home'
 import Uploadapp from "../src/components/pages/Uploadapp";
 import Form from './components/pages/Form';
+import Paymentpage from './components/pages/Paymentpage'
+
 
 
 import {
@@ -22,11 +24,9 @@ function App(){
                     <Route path="/" element={<Home />} />
                     <Route path="/Uploadapp" element={<Uploadapp />} />
                     <Route path="/Form" element={<Form />} />
-                    
-                    
+                    <Route path="/paymentpage" element={<Paymentpage />} />
+                  
 
-        
-        
             </Routes>
 
            </Router>

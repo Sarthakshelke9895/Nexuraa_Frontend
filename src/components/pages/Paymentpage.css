@@ -1,0 +1,89 @@
+.all {
+  margin-top: 100px;
+}
+
+/* Payment container styling */
+.payment-container {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: auto;
+}
+
+/* Payment header styling */
+.payment-header {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Payment subtext styling */
+.payment-subtext {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Pay button styling */
+.pay-button {
+  padding: 12px 30px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #f37254;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for pay button */
+.pay-button:hover {
+  background-color: #e85d42;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .payment-container {
+    max-width: 90%; /* Make container width 90% on tablets and below */
+    margin-top: 20px;
+  }
+
+  .payment-header {
+    font-size: 22px; /* Slightly smaller header on mobile */
+  }
+
+  .payment-subtext {
+    font-size: 14px; /* Smaller subtext on mobile */
+  }
+
+  .pay-button {
+    padding: 10px 25px; /* Adjust button padding on mobile */
+    font-size: 14px; /* Slightly smaller button text on mobile */
+  }
+}
+
+/* Mobile responsiveness for very small devices (phones) */
+@media (max-width: 480px) {
+  .payment-container {
+    padding: 15px; /* Adjust padding for smaller devices */
+    max-width: 95%; /* Make container width 95% for very small screens */
+  }
+
+  .payment-header {
+    font-size: 20px; /* Further reduce font size */
+  }
+
+  .payment-subtext {
+    font-size: 12px; /* Further reduce font size */
+  }
+
+  .pay-button {
+    padding: 8px 20px; /* Adjust padding further on very small screens */
+    font-size: 14px; /* Smaller font size for the button */
+  }
+}

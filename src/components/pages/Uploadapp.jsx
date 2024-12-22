@@ -105,7 +105,7 @@ const Uploadapp = () => {
             <p className="app-description">
               A brief, engaging description of the app goes here, highlighting key features and attracting users to download it.
             </p>
-            <a href="https://drive.google.com/uc?export=download&id=1tUEH1hGW76x9h38rlzIQ8p0_kdN48Q8G" download className="download-btn">
+            <a href="/ssdryfruits.apk" download className="download-btn">
               <span className="download-icon"><img src={Downloadpng} alt="logo" id='downloadicon' /></span>Get App
             </a>
           </div>

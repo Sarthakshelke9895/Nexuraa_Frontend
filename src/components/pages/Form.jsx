@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './form.css'
 import Backarow from '../../assets/backarrow.png'
 import  { useRef } from 'react';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const Form = () => {
+
+
+  const navigate = useNavigate();
+
     const handlebackclick = () => {
         window.history.back();
     }
@@ -16,6 +22,7 @@ const Form = () => {
     const apkfileRef = useRef();
     const applogoRef = useRef();
     const appdescRef = useRef();
+    const sloganRef = useRef();
 
 
 
@@ -46,16 +53,64 @@ const Form = () => {
           firstEmptyField.current.focus();
         } else {
           // All fields are filled; proceed with form submission or other actions
-          alert("Form submitted successfully!");
-          // Uncomment the line below if you want to actually submit the form
-          // e.target.submit();
+          setShowAlert(true); // Show alert when no app is found
+          setTimeout(() => setShowAlert(false), 3000); 
+          sendMail();
+        
+        
+          
+       // Prevent page reload
+          navigate("/Paymentpage"); 
+         
+   
         }
       };
 
+      const [showAlert, setShowAlert] = useState(false); 
+
+      const [email,setEmail]=useState();
+
+
+      function sendMail() {
+        axios
+      .get("http://localhost:5000/", {
+        params: {
+          email
+      
+        },
+      })
+      .then(() => {
+        //success
+        console.log("success");
+      })
+      .catch(() => {
+        console.log("failure");
+      });
+
+     
+
+
+
+
+
+      }
+    
   return (
 
 
     <div className="all">
+
+
+{showAlert && (
+        <div className="custom-alert">
+          <span>Your form has been Submitted.</span>
+          
+          <button onClick={() => setShowAlert(false)} className="close-alert">&times;</button>
+        </div>
+      )}
+
+
+
         <nav className='randomnav'>
             <div className="background">
             <img src={Backarow} alt="Back"  id='backarrow' onClick={handlebackclick}/>
@@ -67,7 +122,7 @@ const Form = () => {
 <div class="custom-form-container">
 <h2 id='onehead'>*Fill out the form with correct details to proceed your app upload</h2>
 
-    <form action="/submit-app" method="POST" enctype="multipart/form-data" class="custom-form">
+    <form action="" method="POST" enctype="multipart/form-data" class="custom-form">
         <div class="custom-form-group">
             <input type="text" id="name" name="name" required class="custom-input" ref={nameRef}/>
             <label for="name" class="custom-label">Name</label>
@@ -75,7 +130,7 @@ const Form = () => {
         </div>
         
         <div class="custom-form-group">
-            <input type="email" id="email" name="email" required class="custom-input" ref={emailRef}/>
+            <input type="email" id="email" name="email" required class="custom-input" onChange={(e)=>setEmail(e.target.value)} ref={emailRef}/>
             <label for="email" class="custom-label">Email</label>
             <span class="custom-underline"></span>
         </div>
@@ -97,7 +152,7 @@ const Form = () => {
             <span class="custom-underline"></span>
         </div>
         <div class="custom-form-group">
-            <input type="text" id="address" name="appslogan"  class="custom-input"/>
+            <input type="text" id="address" name="appslogan"  class="custom-input"  ref={sloganRef}/>
             <label for="appslogan" class="custom-label">App-Slogan (if-any)</label>
             <span class="custom-underline"></span>
         </div>
