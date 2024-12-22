@@ -9,7 +9,7 @@ const Paymentpage = () => {
 
   const handleRedirect = () => {
     // Redirect to an external link
-    var upiIntent = "intent://pay?pa=sarthakshelke044@okicici&pn=Nexura%20.co&mc=123456&tid=Txn12345&tn=App%20Upload%20Fee%20&am=1&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.google.android.apps.nbu.paisa.user;end";
+    var upiIntent = "https://razorpay.me/@nexura?amount=c9yvgMVo3UALiywjEnuNsQ%3D%3D";
     window.location.href = upiIntent;
     
 };
