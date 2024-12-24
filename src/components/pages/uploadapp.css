@@ -299,7 +299,7 @@
 
 
     .app-description {
-        font-size: 0.95rem; 
+        font-size: 0.85rem; 
          margin-bottom: 20px;
          text-align: justify;
         width: 305px;
@@ -321,7 +321,7 @@
         padding: 10px 16px;
         max-width: 400px;
         width: 95%;
-    margin: 20px auto;
+        margin: 20px auto;
 
        
        
@@ -343,6 +343,7 @@
         font-size: 14px;
         color: #272424;
     }
+    
     .custom-alert{
         font-size: 14px;
         padding: 10px 15px;

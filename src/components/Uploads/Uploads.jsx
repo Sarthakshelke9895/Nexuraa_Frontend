@@ -43,57 +43,57 @@ const Uploads = () => {
         <li>
           <div className="slide">
             <div className="user_info">
-              <img src={u1} alt='' />
-              <div>
-                <h3>William Jackson</h3>
-                <span>Edusity,USA</span>
-              </div>
-            </div>
-            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo libero sunt hic sapiente quod cumque, facilis minima quaerat perspiciatis quo dolorum fugit earum voluptates pariatur vero reiciendis corrupti maiores dolores!</p>
-          </div>
-        </li>
-
-
-
-
-        <li>
-        <div className="slide div1">
-            <div className="user_info">
               <img src={u2} alt='' />
               <div>
-                <h3>William Jackson</h3>
-                <span>Edusity,USA</span>
+                <h3>Parth Shinde</h3>
+                <span>Zeal,Pune</span>
               </div>
             </div>
-            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo libero sunt hic sapiente quod cumque, facilis minima quaerat perspiciatis quo dolorum fugit earum voluptates pariatur vero reiciendis corrupti maiores dolores!</p>
+            <p>"I’m thrilled to announce that I’ve uploaded TaskMasterto this amazing platform! It’s incredible to see how it’s helping people organize their daily routines effortlessly. The feedback I’ve received has been fantastic, and I’m committed to making the app even better. This platform has made the whole process smooth and enjoyable!"</p>
           </div>
         </li>
 
 
-        <li>
-        <div className="slide div2">
-            <div className="user_info">
-              <img src={u3}  alt=''/>
-              <div>
-                <h3>William Jackson</h3>
-                <span>Edusity,USA</span>
-              </div>
-            </div>
-            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo libero sunt hic sapiente quod cumque, facilis minima quaerat perspiciatis quo dolorum fugit earum voluptates pariatur vero reiciendis corrupti maiores dolores!</p>
-          </div>
-        </li>
 
 
         <li>
-        <div className="slide div2">
+        <div className="slide ">
             <div className="user_info">
               <img src={u4} alt='' />
               <div>
-                <h3>William Jackson</h3>
-                <span>Edusity,USA</span>
+                <h3>Nilesh Mungare</h3>
+                <span>Zeal,Pune</span>
               </div>
             </div>
-            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo libero sunt hic sapiente quod cumque, facilis minima quaerat perspiciatis quo dolorum fugit earum voluptates pariatur vero reiciendis corrupti maiores dolores!</p>
+            <p>"Uploading FitTrack on this platform has been such a rewarding experience! It’s amazing to see people using the app to achieve their fitness goals. The encouragement and feedback I’ve received inspire me to keep refining it. I’m grateful for this platform for providing such a great opportunity to showcase my work!"</p>
+          </div>
+        </li>
+
+
+        <li>
+        <div className="slide">
+            <div className="user_info">
+              <img src={u3}  alt=''/>
+              <div>
+                <h3>Shraddha Patil</h3>
+                <span>IIITP</span>
+              </div>
+            </div>
+            <p> "I’ve uploaded BudgetBuddy, and I couldn’t be more excited about the response! It’s designed to simplify managing finances, and seeing it help so many users already is truly rewarding. Thanks to this platform, I’ve been able to connect with a wider audience and gather valuable feedback for improvements."</p>
+          </div>
+        </li>
+
+
+        <li>
+        <div className="slide">
+            <div className="user_info">
+              <img src={u1} alt='' />
+              <div>
+                <h3>Sanika Patil</h3>
+                <span>DYP,Pune</span>
+              </div>
+            </div>
+            <p>"I’m so excited to share that I’ve uploaded PhotoSpark here! It’s been my dream project, and the positive response has exceeded my expectations. This platform has made it easy to reach more users, and I’m eager to bring new updates based on their suggestions. Thank you for making this journey so special!"</p>
           </div>
         </li>
       </ul>

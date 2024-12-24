@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
   const handleclick = (e) => {
-    navigate("/Terms_conditions")
+    navigate("/Terms")
   };
   return (
     <div className='foooter '>
       <p>@ 2024 Nexura. All rights reserved </p>
       <ul>
         <li onClick={handleclick}> Terms of Services</li>
-        <li>Privacy Policy</li>
+        <li onClick={handleclick}>Privacy Policy</li>
       </ul>
     </div>
   )

@@ -26,6 +26,7 @@ const Form = () => {
 
 
 
+    
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
     
@@ -124,7 +125,13 @@ const Form = () => {
 
     <form action="" method="POST" enctype="multipart/form-data" class="custom-form">
         <div class="custom-form-group">
-            <input type="text" id="name" name="name" required class="custom-input" ref={nameRef}/>
+            <input 
+            type="text" id="name" 
+            name="name" required 
+            class="custom-input" 
+          
+            ref={nameRef}
+           />
             <label for="name" class="custom-label">Name</label>
             <span class="custom-underline"></span>
         </div>

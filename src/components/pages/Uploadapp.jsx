@@ -76,7 +76,7 @@ const Uploadapp = () => {
       <div className="all2">
         <div className="app-card" id='leafycare'>
           <div className="app-image">
-            <img src={Applogo1} alt="App logo" />
+            <img src={Applogo1} alt="App logo"  className='app_logo'/>
             <div className="nameandco">
               <h2 className="app-name"><h4 id='appname'>LeafyCare</h4>Your Plant's Best Friend, Every Day</h2>
               <p className="app-owner">By: Parth Shinde & Co Developers</p>
@@ -95,7 +95,7 @@ const Uploadapp = () => {
         {/* Second app */}
         <div className="app-card" id='ssdryfruits'>
           <div className="app-image">
-            <img src={Applogo2} alt="App logo" />
+            <img src={Applogo2} alt="App logo"  className='app_logo'/>
             <div className="nameandco">
               <h2 className="app-name"><h4 id='appname'>SS DryFruits</h4>Online Retail Store for Dry Fruits</h2>
               <p className="app-owner">By: Sarthak Shelke & Co Developers</p>
