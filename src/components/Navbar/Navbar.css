@@ -22,13 +22,17 @@ nav{
 }
 #website_logo{
     height: 50px;
-    cursor: pointer;
+    
 }
+
 #website_name{
     font-size: 30px;
     margin-right: 20px;
     letter-spacing: 2px;
     
+}
+#website_name{
+    cursor: pointer;
 }
 nav ul li{
     display: inline-block;

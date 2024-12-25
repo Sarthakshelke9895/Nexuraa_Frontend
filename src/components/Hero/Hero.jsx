@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
 
-  const handleLogoClick = () => {
-    window.location.reload(); // Reload the page
-  };
+  
   const navigate = useNavigate();
 
   const handleUploadClick = () => {

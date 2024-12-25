@@ -33,9 +33,9 @@ const Navbar = () => {
   }
   return (
     <nav className={`container ${sticky ? 'dark_nav':''}`}>
-      <div className="logo_and_website_name">
-      <img  id='website_logo' src="faviconserver" alt='' onClick={handleLogoClick} />
-      <h1 id='website_name'>Nexura</h1>
+      <div className="logo_and_website_name" >
+      <img  id='website_logo' src="faviconserver" alt=''  />
+      <h1 id='website_name' onClick={handleLogoClick}>Nexura</h1>
       </div>
     
 
