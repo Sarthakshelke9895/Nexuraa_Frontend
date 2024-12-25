@@ -22,6 +22,7 @@ nav{
 }
 #website_logo{
     height: 50px;
+    cursor: pointer;
 }
 #website_name{
     font-size: 30px;

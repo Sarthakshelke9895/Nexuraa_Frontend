@@ -8,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
+  const handleLogoClick = () => {
+    window.location.reload(); // Reload the page
+  };
+
   const navigate = useNavigate();
 
   const handleUploadClick = () => {
@@ -30,7 +34,7 @@ const Navbar = () => {
   return (
     <nav className={`container ${sticky ? 'dark_nav':''}`}>
       <div className="logo_and_website_name">
-      <img  id='website_logo' src="faviconserver" alt='' />
+      <img  id='website_logo' src="faviconserver" alt='' onClick={handleLogoClick} />
       <h1 id='website_name'>Nexura</h1>
       </div>
     
