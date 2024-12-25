@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'; // Optional, for global styles
 import Home from './Home'
 import Uploadapp from "../src/components/pages/Uploadapp";
-import Form from './components/pages/form';
+import Form from './components/pages/Form';
 import Paymentpage from './components/pages/Paymentpage'
 import Terms from './components/Terms-conditions_Privacy policy/Terms'
 
