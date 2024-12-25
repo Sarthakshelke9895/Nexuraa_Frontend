@@ -1,0 +1,137 @@
+nav{
+    width: 100%;
+   /* background-color: #40178d;*/
+    color: white;
+    padding: 8px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    padding: 10px;
+
+}
+
+.logo_and_website_name{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width:200px;
+}
+#website_logo{
+    height: 50px;
+}
+#website_name{
+    font-size: 30px;
+    margin-right: 20px;
+    letter-spacing: 2px;
+    
+}
+nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 5px 20px ;
+    font-size: 20px;
+    transition: 5ms;
+    pointer-events: auto; cursor: pointer;
+}
+
+.underline {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 2px;
+    bottom: -3px;
+    left:30px;
+    background-color: rgb(243, 243, 109);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  .nav-link {
+    text-decoration: none;
+    position: relative;
+  }
+
+nav ul li:hover .underline{
+    cursor: pointer;
+    color: rgb(123, 255, 0);
+    transform: scale(1.1);
+    width: 100%;
+    left: 0;
+    transform: translateX(0);
+}
+.dark_nav{
+    background-color:#212EA0;
+    transition: 0.5s
+    
+}
+#contactbutton{
+    background-color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    border-radius: 26px;
+    color: #212EA0;
+    z-index: 200;
+}
+#contactbutton:hover{
+    background-color:#ffffff;
+    color: #000000;
+}
+
+.menu-icon{
+    display: none;
+}
+
+
+@media (max-width: 1000px ){
+  
+    
+  nav ul li{
+    margin: 10px 15px;
+  }
+}
+@media (max-width:480px){
+
+    nav{
+        padding: 15px 0;
+
+    }
+    nav ul{
+        position:fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        width: 300px;
+        padding-top: 70px;
+        transition: 0.5s;
+        background-color: #212EA0;
+    }
+    nav ul li{
+        display: block;
+        margin: 25px 40px;
+        font-size: 30px;
+    }
+    .menu-icon{
+        display: block;
+        width: 40px;
+        cursor: pointer;
+    }
+    .button{
+        padding: 10px 12px;
+    }
+    .hide_mobile_menu{
+      right: -300px;
+    }
+    #website_logo{
+        width: 60px;
+        height: 60px;
+    }
+    #website_name{
+        font-size: 40px;
+        margin-left: 10px;
+    }
+
+}
+

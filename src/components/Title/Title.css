@@ -1,0 +1,25 @@
+.title{
+    text-align: center;
+    color: black;
+    font-size: 15px;
+    font-weight: 600px;
+    text-transform: uppercase;
+    margin: 100px 0px 30px;
+    cursor: pointer;
+
+}
+.title p{
+    font-size: 32px;
+    color: rgb(99, 98, 98);
+    margin-top: 5px;
+    text-transform: none;
+    cursor: pointer;
+}
+@media  (max-width:480px){
+    .title{
+        width: 80vh;
+    }
+    .title p{
+        font-size: 34px;
+    }
+}

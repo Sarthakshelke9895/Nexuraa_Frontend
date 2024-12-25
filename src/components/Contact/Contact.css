@@ -1,0 +1,167 @@
+.Contact{
+    margin: 0px auto;
+    max-width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+}
+.contact_col1{
+    flex-basis: 48%;
+    color: #676767;
+}
+
+.contact_col1 h3{
+    color: #000F38;
+    font-weight: 500;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.contact_col1 h3 img {
+    width: 35px;
+    margin-left: 10px;
+}
+.contact_col1 p{
+    max-width: 450px;
+    line-height: 1.6;
+}
+    .contact_col1 ul li{
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+.contact_col1 ul li img{
+    margin-right: 10px;
+    width: 25px;
+}
+.btn{
+    padding: 12px 25px;
+    background-color: #212EA0;
+    color: white;
+    font-size: 16px;
+    border-radius: 30px;
+    outline: none;
+    display: flex;
+    align-items: center;
+    border: 0;
+    font-size: 20px;
+
+}
+.btn:hover{
+    cursor: pointer;
+}
+.btn img{
+    width: 25px;
+    margin-left: 15px;
+}
+
+.Contact form input, .Contact form textarea{
+    width: 100%;
+    background-color:#ebecfe ;
+    padding: 15px;
+    border: 0;
+    outline: 0;
+    margin-bottom: 30px;
+    margin-top: 5px;
+    display: block;
+    resize: none;
+    font-size: 18px;
+  
+}
+
+.contact_col1 span{
+    display: block;
+    margin: 20px 0;
+
+}
+.contact_col1 p{
+    font-size: 20px;
+}
+.contact_col1 ul li{
+    font-size: 18px;
+}
+form{
+    margin-top: 90px;
+}
+label{
+    color: black;
+    font-size: 22px;
+}
+
+
+@media (max-width:700px){
+    .Contact{
+        display: block;
+    
+    }
+    .contact_col1{
+        padding: 20px;
+        
+    }
+}
+
+
+@media (max-width:480px){
+    .Contact{
+        margin: 0px auto;
+    }
+    
+    .contact_col1{
+        width: 70vh;
+    
+        
+    }
+    .contact_col1 h3{
+        font-size: 30px;
+    }
+    .contact_col1 p{
+        font-size: 24px;
+        line-height: 1.3;
+    }
+    .contact_col1 ul li img{
+        margin-top: 20px;
+        width: 30px;
+    }
+
+    .contact_col1 ul li{
+        font-size: 25px;
+    }
+    .contact_col1 form{
+        padding: 0px;
+        font-size: 22px;
+        height: 500px;
+       
+
+            }
+            .btn{
+                font-size: 20px;
+                
+            }
+
+            form{
+                margin-top: 10px;
+            }
+
+
+            input::placeholder{
+                font-size: 18px;
+            }
+            textarea::placeholder{
+                font-size: 18px;
+            }
+
+            .Contact form input, .Contact form textarea{
+                width: 100%;
+                background-color:#ebecfe ;
+                padding: 15px;
+                border: 0;
+                outline: 0;
+                margin-bottom: 25px;
+                margin-top: 10px;
+                display: block;
+                resize: none;
+            }
+}
