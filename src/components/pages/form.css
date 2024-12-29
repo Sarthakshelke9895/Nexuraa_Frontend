@@ -5,6 +5,7 @@
 
     
 }
+
 .background{
     display: inline-block;
     background-color: #be9f9f00;
@@ -70,6 +71,7 @@
     word-spacing: 1px;
     letter-spacing: 0.03;
    margin-top: 20px;
+   
 }
 .all h2{
     text-align: justify;
@@ -81,12 +83,16 @@
 
     
 }
+form{
+   
+    margin-top: 50px;
+}
 /* Add this CSS to style the highlight */
 
   
 .custom-form-group {
   position: relative;
-    margin-bottom: 20px;
+margin-bottom: 20px;
 
     
 }

@@ -18,6 +18,10 @@ const Navbar = () => {
       // Navigate to the Uploadapp page
       navigate('/Uploadapp');
   };
+  const handleUploadClick2 = () => {
+    // Navigate to the Uploadapp page
+    navigate('/Uploadapp');
+};
 
   const [sticky,setSticky] = useState(false);
 
@@ -41,6 +45,24 @@ const Navbar = () => {
 
 
       <ul className={mobileMenu?"":"hide_mobile_menu"}>
+      <li  className='nav-link' onClick={handleUploadClick2} >
+         
+         <div className="search-bar" id='navbarsearch'>
+         <span className="search-icon">
+           <i className="fas fa-search"></i>
+         </span>
+     
+         <input
+           type="text"
+           className="search-input"
+           placeholder="Search Your App"
+         
+         />
+        
+       </div>
+         
+           
+         </li>
         <li>
         <Link  className='nav-link'
          to="homeSection" 
@@ -83,9 +105,14 @@ const Navbar = () => {
            <span className="underline"></span>
           </Link>
         </li>
-      
+
       </ul>
+    
+    
+       
+     
       <img src={menu_icon} alt=""  className='menu-icon' onClick={togglemenu}/>
+      
     </nav>
   )
 }

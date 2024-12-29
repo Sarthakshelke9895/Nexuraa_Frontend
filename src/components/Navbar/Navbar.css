@@ -8,9 +8,10 @@ nav{
     left: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+  justify-content: space-between;
     z-index: 10;
     padding: 10px;
+   
 
 }
 
@@ -34,6 +35,7 @@ nav{
 #website_name{
     cursor: pointer;
 }
+
 nav ul li{
     display: inline-block;
     list-style: none;
@@ -41,6 +43,7 @@ nav ul li{
     font-size: 20px;
     transition: 5ms;
     pointer-events: auto; cursor: pointer;
+    
 }
 
 .underline {
@@ -88,6 +91,17 @@ nav ul li:hover .underline{
     display: none;
 }
 
+#navbarsearch{
+    margin: 0;
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.959);
+}
+#searchnav{
+    display: none;
+   
+}
+
+
 
 @media (max-width: 1000px ){
   
@@ -101,6 +115,10 @@ nav ul li:hover .underline{
     nav{
         padding: 15px 0;
 
+    }
+    #navbarsearch{
+        margin: 0;
+        width: 225px;
     }
     nav ul{
         position:fixed;
@@ -116,7 +134,7 @@ nav ul li:hover .underline{
     nav ul li{
         display: block;
         margin: 25px 40px;
-        font-size: 30px;
+        font-size: 25px;
     }
     .menu-icon{
         display: block;
@@ -136,6 +154,18 @@ nav ul li:hover .underline{
     #website_name{
         font-size: 40px;
         margin-left: 10px;
+    }
+    #contactbutton{
+        background-color: rgb(255, 255, 255);
+        padding: 10px 20px;
+        border-radius: 8px;
+        color: #212EA0;
+        z-index: 200;
+    }
+    #searchnav{
+        color:white;
+        font-size: 30px;
+       
     }
 
 }
