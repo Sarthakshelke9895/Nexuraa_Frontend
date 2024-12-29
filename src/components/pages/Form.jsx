@@ -42,7 +42,7 @@ const Form = () => {
     formData.append("appdesc", appdescRef.current.value);
 
     // Send data to server
-    axios.post("https://nexuraa-backend-iy8wjpe2n-sarthakshelke9895s-projects.vercel.app/send-email", formData)
+    axios.post("http://localhost:5000/send-email", formData)
       .then(response => {
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000); 
@@ -81,7 +81,7 @@ const Form = () => {
 
           <div class="custom-form-group">
             <input type="email" id="email" name="email" required class="custom-input" onChange={(e) => setEmail(e.target.value)} ref={emailRef} />
-            <label for="email" class="custom-label">E-mail</label>
+            <label for="email" class="custom-label">Email</label>
             <span class="custom-underline"></span>
           </div>
 
