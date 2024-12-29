@@ -76,8 +76,12 @@ const Form = () => {
     formData.append('appdesc', appdescRef.current.value);
 
     // Make API call to send form data
-    axios
-      .post('https://nexuraa-backend-iy8wjpe2n-sarthakshelke9895s-projects.vercel.app/send-email', formData)
+    axios  .post('https://nexuraa-backend-iy8wjpe2n-sarthakshelke9895s-projects.vercel.app/send-email', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+
       .then(() => {
         // Success
         console.log('Form submitted successfully');
