@@ -81,7 +81,7 @@ const Form = () => {
 
           <div class="custom-form-group">
             <input type="email" id="email" name="email" required class="custom-input" onChange={(e) => setEmail(e.target.value)} ref={emailRef} />
-            <label for="email" class="custom-label">Email</label>
+            <label for="email" class="custom-label">E-mail</label>
             <span class="custom-underline"></span>
           </div>
 
