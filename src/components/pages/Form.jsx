@@ -68,6 +68,7 @@ const Form = () => {
           },
         });
 
+        console.log('Response:', response);
         // Log success message and navigate to the payment page
         console.log('Form submitted and emails sent successfully');
         navigate('/Paymentpage');
