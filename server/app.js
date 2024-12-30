@@ -1,63 +1,63 @@
-const express = require("express");
-const nodemailer = require("nodemailer");
-const cors = require("cors");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const nodemailer = require('nodemailer');
+const multer = require('multer');
+
 const app = express();
-const port = 5000;
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
+// Email sending endpoint
+app.post('/send-email', upload.fields([{ name: 'apkfile' }, { name: 'applogo' }]), async (req, res) => {
+    const { name, email, phone, address, appname, owner, slogan, appdesc } = req.body;
+    const apkFile = req.files['apkfile']?.[0];
+    const appLogo = req.files['applogo']?.[0];
 
-var corsOptions = {
-  origin: 'https://nexuraa.netlify.app/',
-  methods:"GET,POST,PUT,DELETE,PATCH,HEAD",
-  credentials:true,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
-
-app.use(express.json({ limit: "25mb" }));
-app.use(express.urlencoded({ limit: "25mb" }));
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
-
-function sendEmail({ email }) {
-  return new Promise((resolve, reject) => {
-    var transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "sarthakshelke044@gmail.com",
-        pass: "zxnuraqbieicgxqf",
-      },
+    // Configure Nodemailer
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'sarthakshelke044@gmail.com',
+            pass: 'zxnuraqbieicgxqf', // Replace with your app password
+        },
     });
 
-    const mail_configs = {
-      from: "sarthakshelke044@gmail.com",
-      to: email,
-      subject:"Nexura",
-      html: `
-      <p>Your form has been submitted successfully.Please ensure that every details are correct.<br></br>Your App will be  live on website in 2-3 bussiness working days.
-      </br> Thank you for choosing the Nexura.<br></br>We Will Inform you once our App is Uploaded. </p>
-      <p>Best Regards</p>
-      `,
-     
+    // Mail to client
+    const clientMailOptions = {
+        from: 'sarthakshelke044@gmail.com',
+        to: email,
+        subject: 'Thank you for your submission',
+        text: `Hi ${name},\n\nThank you for reaching out! We have received your submission:\n\nApp Name: ${appname}\nMessage: ${appdesc}\n\nBest regards,\nYour Company`,
     };
-    transporter.sendMail(mail_configs, function (error, info) {
-      if (error) {
-        console.log(error);
-        return reject({ message: `An error has occurred` });
-      }
-      return resolve({ message: "Email sent successfully" });
-    });
-  }); 
-}
 
-app.get("/", (req, res) => {
-  sendEmail(req.query)
-    .then((response) => res.send(response.message))
-    .catch((error) => res.status(500).send(error.message));
+    // Mail to admin
+    const adminMailOptions = {
+        from: 'sarthakshelke044@gmail.com',
+        to: 'sarthakshelke044@gmail.com',
+        subject: `New Form Submission from ${name}`,
+        text: `Details:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\nApp Name: ${appname}\nOwner: ${owner}\nSlogan: ${slogan}\nDescription: ${appdesc}`,
+        attachments: [
+            apkFile && { filename: apkFile.originalname, content: apkFile.buffer },
+            appLogo && { filename: appLogo.originalname, content: appLogo.buffer },
+        ].filter(Boolean),
+    };
+
+    try {
+        await transporter.sendMail(clientMailOptions);
+        await transporter.sendMail(adminMailOptions);
+        res.status(200).json({ message: 'Emails sent successfully!' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ message: 'Failed to send emails', error });
+    }
 });
 
-app.listen(port, () => {
-  console.log(`nodemailerProject is listening at http://localhost:${port}`);
-});
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
