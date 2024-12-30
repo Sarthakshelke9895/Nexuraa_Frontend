@@ -74,7 +74,7 @@ const Form = () => {
 
       function sendMail() {
         axios
-      .get("http://localhost:5000/", {
+      .get("https://server-5937.onrender.com/", {
         params: {
           email
       
