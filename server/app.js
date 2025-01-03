@@ -35,10 +35,36 @@ function sendEmail({ email }) {
       from: "sarthakshelke044@gmail.com",
       to: email,
       subject:"Nexura",
-      html: `
-      <p>Your form has been submitted successfully.Please ensure that every details are correct.<br></br>Your App will be  live on website in 2-3 bussiness working days.
-      </br> Thank you for choosing the Nexura.<br></br>We Will Inform you once our App is Uploaded. </p>
-      <p>Best Regards</p>
+      html: `<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <strong>Your form has been submitted successfully!</strong> Please ensure that all details are accurate.  
+</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Your app will be live on our website within <strong>2-3 business working days</strong>. 
+  <br>Thank you for choosing <strong>Nexura</strong>.
+</p>
+<hr style="border: none; border-top: 1px solid #ccc;">
+<h3 style="font-family: Arial, sans-serif; font-size: 18px; color: #555;">Important Payment Information:</h3>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  To ensure your app goes live as planned, please complete the payment process. You can use the following details for the transaction:
+</p>
+<ul style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <li><strong>Amount:</strong> [21.00 INR]</li>
+  <li><strong>Payment Method:</strong> [UPI]</li>
+</ul>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  After completing the payment, attach the screenshot of payment and  please notify us at <strong>[nexura.com@gmail.com]</strong> to avoid any delays.
+</p>
+<hr style="border: none; border-top: 1px solid #ccc;">
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  We will inform you once your app is successfully uploaded.
+</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <strong>Thank you for your trust in Nexura!</strong>
+</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Best regards,  
+  <br><strong>The Nexura Team</strong>  
+</p>
       `,
      
     };
