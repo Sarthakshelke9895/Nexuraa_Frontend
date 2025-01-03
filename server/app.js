@@ -50,6 +50,7 @@ function sendEmail({ email }) {
 <ul style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
   <li><strong>Amount:</strong> [21.00 INR]</li>
   <li><strong>Payment Method:</strong> [UPI]</li>
+  <li><strong>Click On the link to pay:</strong><a href ="https://razorpay.me/@nexura?amount=c9yvgMVo3UALiywjEnuNsQ%3D%3D"></a></li>
 </ul>
 <p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
   After completing the payment, attach the screenshot of payment and  please notify us at <strong>[nexura.com@gmail.com]</strong> to avoid any delays.
