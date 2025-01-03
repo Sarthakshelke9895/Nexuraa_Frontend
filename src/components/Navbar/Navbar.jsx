@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Navbar.css'
-import menu_icon from '../../assets/menu-icon.png'
+import menu_icon from '../../assets/menu-icon.png';
 import { Link } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 
