@@ -15,7 +15,7 @@ const Terms = () => {
           <img src={Backarow} alt="Back" id='backarrow' onClick={handlebackclick} />
         </div>
         <img src="faviconserver" alt="logo" id='website_logonav' />
-        <h1 id='website_namenav'>Nexura</h1>
+        <h1 id='website_namenav'>Nexuraa</h1>
       </nav>
 
 
