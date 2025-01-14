@@ -70,14 +70,19 @@ const Form = () => {
       const [showAlert, setShowAlert] = useState(false); 
 
       const [email,setEmail]=useState();
+      const [name,setName]=useState();
+      const [contact,setContact]=useState();
+      const [AppDesc,setAppDescription]=useState();
+      const [AppName,setAppName]=useState();
+
+
 
 
       function sendMail() {
         axios
       .get("https://server-5937.onrender.com/", {
         params: {
-          email
-      
+          email,name,contact,AppDesc,AppName
         },
       })
       .then(() => {
@@ -87,12 +92,6 @@ const Form = () => {
       .catch(() => {
         console.log("failure");
       });
-
-     
-
-
-
-
 
       }
     
@@ -129,8 +128,8 @@ const Form = () => {
             type="text" id="name" 
             name="name" required 
             class="custom-input" 
-          
             ref={nameRef}
+            onChange={(e)=>setName(e.target.value)}
            />
             <label for="name" class="custom-label">Name</label>
             <span class="custom-underline"></span>
@@ -143,7 +142,7 @@ const Form = () => {
         </div>
 
         <div class="custom-form-group">
-            <input type="tel" id="contactNo" name="contactNo" required class="custom-input" ref={phoneRef}/>
+            <input type="tel" id="contactNo" name="contactNo" required class="custom-input"  onChange={(e)=>setContact(e.target.value)}ref={phoneRef}/>
             <label for="contactNo" class="custom-label">Contact Number</label>
             <span class="custom-underline"></span>
         </div>
@@ -154,7 +153,7 @@ const Form = () => {
             <span class="custom-underline"></span>
         </div>
         <div class="custom-form-group">
-            <input type="text" id="app-name" name="app-name"  required class="custom-input"  ref={appnameRef}/>
+            <input type="text" id="app-name" name="app-name"  required class="custom-input"  onChange={(e)=>setAppName(e.target.value)}ref={appnameRef}/>
             <label for="app-name" class="custom-label">App-Name</label>
             <span class="custom-underline"></span>
         </div>
@@ -184,7 +183,7 @@ const Form = () => {
         </div>
 
         <div class="custom-form-group">
-            <textarea id="appDescription" name="appDescription" required class="custom-input"  ref={appdescRef}></textarea>
+            <textarea id="appDescription" name="appDescription" required class="custom-input" onChange={(e)=>setAppDescription(e.target.value)} ref={appdescRef}></textarea>
             <label for="appDescription" class="custom-label">App Description</label>
             <span class="custom-underline"></span>
         </div>
