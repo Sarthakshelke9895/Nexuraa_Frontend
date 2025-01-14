@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import "./uploadapp.css";
+import React, { useState } from 'react';
+import './uploadapp.css';
 import Applogo1 from '../../assets/Assets/leafylogo.jpg';
 import Applogo2 from '../../assets/Assets/drfruitslogo.jpeg';
 import Downloadpng from '../../assets/download.png';
@@ -7,81 +7,46 @@ import Backarow from '../../assets/backarrow.png';
 
 const Uploadapp = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [showAlert, setShowAlert] = useState(false); // State to control alert visibility
-  const [showSuggestions, setShowSuggestions] = useState(false); // Control suggestion dropdown visibility
-  const inputRef = useRef(null);  // Ref for the input field
+  const [showAlert, setShowAlert] = useState(false);
+  const [filteredApps, setFilteredApps] = useState([]);
+  const [fadeOut, setFadeOut] = useState(false);
 
-  // Function to get suggestions based on search input
-  const getSuggestions = (searchTerm) => {
-    const availableSuggestions = ["LeafyCare", "SS DryFruits"]; // Example apps, replace with your actual logic
-    return availableSuggestions.filter((app) =>
-      app.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+
+
+  const apps = [
+    {
+      id: 'leafycare',
+      logo: Applogo1,
+      name: 'LeafyCare',
+      slogan: 'Your Plant\'s Best Friend, Every Day',
+      owner: 'Parth Shinde & Co Developers',
+      downloadLink: 'path/to/leafycare-app.apk',
+      desc:"LeafyCare: Your Plant's Best Friend, Every Day. A smart gardening app to nurture your plants, providing tips, reminders, and more for a greener life!"
+    },
+    {
+      id: 'ssdryfruits',
+      logo: Applogo2,
+      name: 'SS DryFruits',
+      slogan: 'Online Retail Store for Dry Fruits',
+      owner: 'Sarthak Shelke & Co Developers',
+      downloadLink: '/ssdryfruits.apk',
+      desc:"SS DryFruits: Your one-stop shop for premium dry fruits. Fresh, healthy, and delivered with care! Explore a variety of quality nuts and dried fruits to enhance your lifestyle."
+
+    },
+  ];
+  
+
+  const handlebackclick = () => {
+    window.history.back();
   };
 
-  // Handle input changes and filter suggestions
-  const handleSearchChange = (event) => {
-    const newSearchTerm = event.target.value;
-    setSearchTerm(newSearchTerm);
-
-    // If the search term is empty, hide the suggestions
-    if (newSearchTerm.trim() === '') {
-      setShowSuggestions(false); // Hide suggestions when search is cleared
-    } else {
-      const filteredSuggestions = getSuggestions(newSearchTerm);
-      setSuggestions(filteredSuggestions);
-
-      // Show suggestions only when there are matching results
-      if (filteredSuggestions.length > 0) {
-        setShowSuggestions(true);
-      } else {
-        setShowSuggestions(false); // Hide suggestions if no matches
-      }
-    }
-  };
-
-  // Show suggestions when input field is clicked
-  const handleInputClick = () => {
-    if (searchTerm.trim() !== '') {
-      setShowSuggestions(true);  // Show suggestions if user has typed something
-    }
-  };
-
-  // Handle suggestion click (hide suggestions, keep input focused)
-  const handleSuggestionClick = (suggestion, event) => {
-    // Prevent the default behavior to keep the input active and the keyboard visible
-    event.preventDefault();
-
-    // Prevent input field from losing focus by focusing it programmatically
-    inputRef.current.focus();
-
-    // Update the search term with the clicked suggestion
-    setSearchTerm(suggestion);
-
-    // Hide the suggestion dropdown after selection
-    setShowSuggestions(false);
-
-    // Optional: Scroll to the relevant section or item based on the suggestion
-    const normalizedSearchId = suggestion.trim().toLowerCase().replace(/\s+/g, '');
-    const targetElement = document.querySelector(`#${normalizedSearchId}`);
-    if (targetElement) {
-     
-    }
-  };
-
-  // Handle pressing Enter key to scroll to the desired app
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       const normalizedSearchId = searchTerm.trim().toLowerCase().replace(/\s+/g, '');
-      const targetElement = document.querySelector(`#${normalizedSearchId}`);
+      const targetElement = document.querySelector(`[id="${normalizedSearchId}"]`);
       if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: 'smooth', 
-          block: 'center'
-        });
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        // Optional: Scale-up effect on desktop
         if (window.innerWidth > 768) {
           targetElement.classList.add('scale-up');
           setTimeout(() => {
@@ -89,31 +54,73 @@ const Uploadapp = () => {
           }, 1500);
         }
       } else {
-        setShowAlert(true); // Show alert when no app is found
-        setTimeout(() => setShowAlert(false), 3000); // Auto-hide after 3 seconds
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 3000);
       }
     }
   };
 
-  const handlebackclick = () => {
-    window.history.back();
+  const handleInputChange = (e) => {
+    const searchValue = e.target.value.trim();
+    setSearchTerm(searchValue);
+  
+    if (searchValue) {
+      const filtered = apps.filter((app) =>
+        app.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setFilteredApps(filtered);
+    } else {
+      setFilteredApps([]); // Clear suggestions when input is empty
+    }
   };
+  
+
+  const handleSuggestionClick = (suggestion) => {
+    setFadeOut(true);
+    setSearchTerm(suggestion.name);
+    setFilteredApps([]); 
+  
+    // Scroll to the corresponding card
+    const targetElement = document.getElementById(suggestion.id);
+    if (targetElement) {
+      if (window.innerWidth > 768) {
+        targetElement.classList.add('scale-up');
+        setTimeout(() => {
+          targetElement.classList.remove('scale-up');
+        }, 1500);
+      }
+    } else {
+      setShowAlert(true); // Show alert when no app is found
+      setTimeout(() => setShowAlert(false), 3000); // Auto-hide after 3 seconds
+    
+    }
+  
+    // Refocus input (optional for mobile)
+    const inputElement = document.querySelector('input[type="text"]');
+    if (inputElement) {
+      inputElement.focus();
+    }
+  };
+  
+  
 
   return (
     <div className="containerforapps">
-      <nav className='randomnav'>
+      <nav className="randomnav">
         <div className="background">
-          <img src={Backarow} alt="Back" id='backarrow' onClick={handlebackclick} />
+          <img src={Backarow} alt="Back" id="backarrow" onClick={handlebackclick} />
         </div>
-        <img src="faviconserver" alt="logo" id='website_logonav' />
-        <h1 id='website_namenav'>Nexuraa</h1>
+        <img src="faviconserver" alt="logo" id="website_logonav" />
+        <h1 id="website_namenav">Nexuraa</h1>
       </nav>
 
       {/* Custom Alert */}
       {showAlert && (
         <div className="custom-alert">
           <span>No App found.</span>
-          <button onClick={() => setShowAlert(false)} className="close-alert">&times;</button>
+          <button onClick={() => setShowAlert(false)} className="close-alert">
+            &times;
+          </button>
         </div>
       )}
 
@@ -122,71 +129,60 @@ const Uploadapp = () => {
           <i className="fas fa-search"></i>
         </span>
         <input
-          ref={inputRef}  // Attach ref to the input field
           type="text"
           className="search-input"
           placeholder="Search Your App"
           value={searchTerm}
-          onChange={handleSearchChange}
+          onChange={handleInputChange}
           onKeyPress={handleKeyPress}
-          onClick={handleInputClick}  // Show suggestions when clicked
         />
       </div>
 
-      {/* Conditionally render the suggestion dropdown */}
-      {showSuggestions && suggestions.length > 0 && (
-        <div className="suggestions-dropdown">
-          {suggestions.map((suggestion, index) => (
+      {/* Suggestions Dropdown */}
+      {searchTerm && filteredApps.length > 0 && (
+        <div
+          className={`suggestions-dropdown ${fadeOut ? 'fade-out' : ''}`}
+        >
+          {filteredApps.map((app) => (
             <div
-              key={index}
+              key={app.id}
               className="suggestion-item"
-              onClick={(event) => handleSuggestionClick(suggestion, event)} // Pass the event to prevent default action
+              onClick={() => handleSuggestionClick(app)}
             >
-              {suggestion}
+              {app.name}
             </div>
           ))}
         </div>
       )}
 
-      <h1 id='heading'>Our Uploads :</h1>
+      <h1 id="heading">Our Uploads :</h1>
 
       <div className="all2">
-        <div className="app-card" id='leafycare'>
-          <div className="app-image">
-            <img src={Applogo1} alt="App logo" className='app_logo' />
-            <div className="nameandco">
-              <h2 className="app-name"><h4 id='appname'>LeafyCare</h4>Your Plant's Best Friend, Every Day</h2>
-              <p className="app-owner">By: Parth Shinde & Co Developers</p>
+        {apps.map((app) => (
+          <div className="app-card" id={app.id} key={app.id}>
+            <div className="app-image">
+              <img src={app.logo} alt="App logo" className="app_logo" />
+              <div className="nameandco">
+                <h2 className="app-name">
+                  <h4 id="appname">{app.name}</h4>
+                  {app.slogan}
+                </h2>
+                <p className="app-owner">By: {app.owner}</p>
+              </div>
+            </div>
+            <div className="app-details">
+              <p className="app-description">
+               {app.desc}
+              </p>
+              <a href={app.downloadLink} download className="download-btn">
+                <span className="download-icon">
+                  <img src={Downloadpng} alt="logo" id="downloadicon" />
+                </span>
+                Get App
+              </a>
             </div>
           </div>
-          <div className="app-details">
-            <p className="app-description">
-              A brief, engaging description of the app goes here, highlighting key features and attracting users to download it.
-            </p>
-            <a href="path/to/your-app.apk" download className="download-btn">
-              <span className="download-icon"><img src={Downloadpng} alt="logo" id='downloadicon' /></span>Get App
-            </a>
-          </div>
-        </div>
-
-        {/* Second app */}
-        <div className="app-card" id='ssdryfruits'>
-          <div className="app-image">
-            <img src={Applogo2} alt="App logo" className='app_logo' />
-            <div className="nameandco">
-              <h2 className="app-name"><h4 id='appname'>SS DryFruits</h4>Online Retail Store for Dry Fruits</h2>
-              <p className="app-owner">By: Sarthak Shelke & Co Developers</p>
-            </div>
-          </div>
-          <div className="app-details">
-            <p className="app-description">
-              A brief, engaging description of the app goes here, highlighting key features and attracting users to download it.
-            </p>
-            <a href="/ssdryfruits.apk" download className="download-btn">
-              <span className="download-icon"><img src={Downloadpng} alt="logo" id='downloadicon' /></span>Get App
-            </a>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

@@ -62,29 +62,6 @@
     opacity: 0;
   }
 }
-.suggestions-dropdown {
-    position: absolute;
-    top: 120px; /* Adjust based on your layout */
-    width: 22%;
-    left: 25px;
-    background-color: white;
-    border: 1px solid #ccc;
-    max-height: 150px;
-    overflow-y: auto;
-    z-index: 10;
-  }
-  
-  .suggestion-item {
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .suggestion-item:hover, .suggestion-item.selected {
-    background-color: #f0f0f0;
-
-  }
-  
-
 
 #heading{
     text-align: left;
@@ -113,6 +90,43 @@
     margin-right: 8px;
 }
 
+
+.suggestions-dropdown {
+    position: absolute;
+    background-color: rgb(222, 222, 223);
+   
+    width: 25rem;
+    top: 115px;
+    left: 25px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    border-bottom-left-radius: 15px; /* Adjust the value as needed */
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
+     
+      
+    
+  }
+  
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #212EA0;
+    color: #ffffff;
+  }
+  .suggestions-dropdown.fade-out {
+    opacity: 0;
+  }
+  
+
+
+
+
+
 /* Style for the input field */
 .search-input {
     border: none;
@@ -126,6 +140,7 @@
 /* Placeholder color */
 .search-input::placeholder {
     color: #3f3e3e;
+    font-size: 14px;
 }
 
 /* Add focus effect */
@@ -134,9 +149,10 @@
 }
 
 .scale-up {
-    transform: scale(1.05); /* Slightly enlarge the card */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a glowing effect around the card */
-  background-color: #f5f5f5; 
+    transform: scale(1.04);
+    background-color: #ececec;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+   
   
 }
 
@@ -346,7 +362,7 @@
 
 
     .app-description {
-        font-size: 0.85rem; 
+        font-size:0.7rem; 
          margin-bottom: 10px;
          text-align: justify;
          width: 95%;
@@ -391,9 +407,6 @@
         font-size: 14px;
         color: #272424;
     }
-    .search-input::placeholder{
-        font-size: 14px;
-    }
     
     .custom-alert{
         font-size: 14px;
@@ -402,11 +415,8 @@
     .custom-alert .close-alert{
         font-size: 18px;
     }
-
-
-    .suggestions-dropdown {
-        width: 95%; /* Take most of the screen on small screens */
-         left: 10px;/* Center the dropdown */
-        top: 115px;
+    .suggestions-dropdown{
+        width: 95%;
+        left: 10px;
     }
 }
