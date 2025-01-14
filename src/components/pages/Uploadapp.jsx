@@ -9,7 +9,7 @@ const Uploadapp = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [filteredApps, setFilteredApps] = useState([]);
-  const [fadeOut, setFadeOut] = useState(false);
+ 
 
 
 
@@ -76,7 +76,7 @@ const Uploadapp = () => {
   
 
   const handleSuggestionClick = (suggestion) => {
-    setFadeOut(true);
+    
     setSearchTerm(suggestion.name);
     setFilteredApps([]); 
   
@@ -141,7 +141,7 @@ const Uploadapp = () => {
       {/* Suggestions Dropdown */}
       {searchTerm && filteredApps.length > 0 && (
         <div
-          className={`suggestions-dropdown ${fadeOut ? 'fade-out' : ''}`}
+          className="suggestions-dropdown"
         >
           {filteredApps.map((app) => (
             <div

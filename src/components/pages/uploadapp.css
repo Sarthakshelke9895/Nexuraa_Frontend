@@ -93,7 +93,7 @@
 
 .suggestions-dropdown {
     position: absolute;
-    background-color: rgb(222, 222, 223);
+    background-color: rgb(255, 255, 255);
    
     width: 25rem;
     top: 115px;
@@ -149,8 +149,8 @@
 }
 
 .scale-up {
-    transform: scale(1.04);
-    background-color: #ececec;
+    transform: scale(1.02);
+    background-color: #ecececd0;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
    
   
