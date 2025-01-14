@@ -73,7 +73,7 @@ function sendEmail({ email,name,contact,AppDesc,AppName}) {
 
 
     const mail_configs_admin = {
-      from:email,
+      from:"sarthakshelke044@gmail.com",
       to:"nexura.com@gmail.com",
       subject:"New Form Submission From Nexuraa!",
       html:`<p><p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
