@@ -55,7 +55,7 @@ const Form = () => {
         } else {
           // All fields are filled; proceed with form submission or other actions
           setShowAlert(true); // Show alert when no app is found
-          setTimeout(() => setShowAlert(false), 3000); 
+          setTimeout(() => setShowAlert(false), 1000); 
           sendMail();
         
         

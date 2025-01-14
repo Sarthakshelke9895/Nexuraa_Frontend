@@ -80,7 +80,7 @@ function sendEmail({ email,name,contact,AppDesc,AppName}) {
       <strong>Dear Admin,</strong><br><br>
       A new form has been successfully submitted on the Nexura website. Please review the details below:
     </p>
-    <p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+    <p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333; text-align:justify;">
       <strong>Client Information:</strong>
     </p>
     <ul style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
@@ -105,9 +105,9 @@ function sendEmail({ email,name,contact,AppDesc,AppName}) {
       }
       return resolve({ message: "Email sent successfully" });
     });
-    transporter.sendMail(mail_configs_admin, function (error, info) {
-      if (error) {
-        console.log(error);
+    transporter.sendMail(mail_configs_admin, function (error2, info2) {
+      if (error2) {
+        console.log(error2);
         return reject({ message: `An error has occurred` });
       }
       return resolve({ message: "Email sent successfully" });
