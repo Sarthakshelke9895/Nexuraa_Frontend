@@ -35,7 +35,7 @@
   padding: 12px 30px;
   font-size: 16px;
   color: #fff;
-  background-color: #f37254;
+  background-color: #212EA0;;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -44,7 +44,7 @@
 
 /* Hover effect for pay button */
 .pay-button:hover {
-  background-color: #e85d42;
+  background-color: #295fb1;
 }
 
 /* Mobile responsiveness */
