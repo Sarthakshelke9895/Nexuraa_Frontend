@@ -5,7 +5,7 @@ import  { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const Form = () => {
+const Form = async () => {
 
 
   const navigate = useNavigate();
@@ -74,6 +74,26 @@ const Form = () => {
       const [contact,setContact]=useState();
       const [AppDesc,setAppDescription]=useState();
       const [AppName,setAppName]=useState();
+      const [file,setFile]=useState();
+
+       const formData = new FormData();
+       formData.append("email", email);
+       formData.append("file", file);
+       formData.append("name",name);
+       formData.append("contact",contact);
+       
+       const result = await axios.post(
+        "https://server-5937.onrender.com/upload-files",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      if (result.data.status == "ok") {
+        alert("Uploaded Successfully!!!");
+       
+      }
+       
 
 
 
@@ -171,7 +191,7 @@ const Form = () => {
         <div class="custom-form-group">
         <div class="form-group">
             <label for="apkFile" className='hello'>APK File</label>
-            <input type="file" id="apkFile" name="apkFile" accept=".apk" required ref={apkfileRef}/>
+            <input type="file" id="apkFile" name="apkFile" accept=".apk" onChange={(e)=>setFile(e.target.files[0])} required ref={apkfileRef}/>
         </div>
         </div>
 
