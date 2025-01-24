@@ -89,7 +89,7 @@ const Form = async () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      if (result.data.status == "ok") {
+      if (result.data.status ==="ok") {
         alert("Uploaded Successfully!!!");
        
       }
