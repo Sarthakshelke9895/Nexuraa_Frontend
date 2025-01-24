@@ -74,16 +74,6 @@ const Form = () => {
       const [contact,setContact]=useState();
       const [AppDesc,setAppDescription]=useState();
       const [AppName,setAppName]=useState();
-      const [file,setFile]=useState();
-
-       const formData = new FormData();
-       formData.append("email", email);
-       formData.append("file", file);
-       formData.append("name",name);
-       formData.append("contact",contact);
-
-      
-       
 
 
 
@@ -95,8 +85,6 @@ const Form = () => {
           email,name,contact,AppDesc,AppName
         },
       })
-
-      
       .then(() => {
         //success
         console.log("success");
@@ -104,14 +92,6 @@ const Form = () => {
       .catch(() => {
         console.log("failure");
       });
-
-      axios.post(
-        "https://server-5937.onrender.com/upload-files",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
 
       }
     
@@ -191,7 +171,7 @@ const Form = () => {
         <div class="custom-form-group">
         <div class="form-group">
             <label for="apkFile" className='hello'>APK File</label>
-            <input type="file" id="apkFile" name="apkFile" accept=".apk" onChange={(e)=>setFile(e.target.files[0])} required ref={apkfileRef}/>
+            <input type="file" id="apkFile" name="apkFile" accept=".apk" required ref={apkfileRef}/>
         </div>
         </div>
 
