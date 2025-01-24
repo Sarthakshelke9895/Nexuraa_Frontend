@@ -5,7 +5,7 @@ import  { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const Form = async () => {
+const Form = () => {
 
 
   const navigate = useNavigate();
@@ -81,18 +81,8 @@ const Form = async () => {
        formData.append("file", file);
        formData.append("name",name);
        formData.append("contact",contact);
-       
-       const result = await axios.post(
-        "https://server-5937.onrender.com/upload-files",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      if (result.data.status ==="ok") {
-        alert("Uploaded Successfully!!!");
-       
-      }
+
+      
        
 
 
@@ -105,6 +95,8 @@ const Form = async () => {
           email,name,contact,AppDesc,AppName
         },
       })
+
+      
       .then(() => {
         //success
         console.log("success");
@@ -112,6 +104,14 @@ const Form = async () => {
       .catch(() => {
         console.log("failure");
       });
+
+      axios.post(
+        "https://server-5937.onrender.com/upload-files",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       }
     
