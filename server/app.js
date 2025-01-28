@@ -149,7 +149,7 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
     transporter.sendMail(mail_configs, function (error, info) {
       if (error) {
         console.log(error);
-        return reject({ message: `An error has occurred` });
+        return reject({ message: `Welcome to Backend ` });
       }
       transporter.sendMail(mail_configs_admin, function (error2, info2) {
         if (error2) {
