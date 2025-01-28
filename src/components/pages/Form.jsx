@@ -57,7 +57,7 @@ const Form = () => {
           setShowAlert(true); // Show alert when no app is found
           setTimeout(() => setShowAlert(false), 1000); 
           sendMail();
-        
+          adddatabse();
         
           
        // Prevent page reload
@@ -76,7 +76,33 @@ const Form = () => {
       const [AppName,setAppName]=useState();
 
 
+   
+      const [apkFile, setApkFile] = useState(null);
+      const [image, setImage] = useState(null);
 
+
+
+      async function adddatabse(){
+        
+
+
+
+        const formData = new FormData();
+        formData.append("email", email);
+        formData.append("apkFile", apkFile);
+        formData.append("image", image);
+
+
+        try {
+          const response = await axios.post("https://server-5937.onrender.com/submit-form", formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+          });
+          console.log(response.data.message);
+      } catch (err) {
+          console.error(err);
+          alert("Failed to submit the form.");
+      }
+      }
 
       function sendMail() {
         axios
@@ -171,14 +197,14 @@ const Form = () => {
         <div class="custom-form-group">
         <div class="form-group">
             <label for="apkFile" className='hello'>APK File</label>
-            <input type="file" id="apkFile" name="apkFile" accept=".apk" required ref={apkfileRef}/>
+            <input type="file" id="apkFile" name="apkFile" accept=".apk"      onChange={(e) => setApkFile(e.target.files[0]) }required ref={apkfileRef}/>
         </div>
         </div>
 
         <div class="custom-form-group">
         
             <label for="appImage" className='hello'>App Image</label>
-            <input type="file" id="appImage" name="appImage" accept="image/*" required ref={applogoRef}/>
+            <input type="file" id="appImage" name="appImage" accept="image/*"   onChange={(e) => setImage(e.target.files[0])} required ref={applogoRef}/>
       
         </div>
 
