@@ -92,7 +92,7 @@ const Form = () => {
         console.log("success");
       })
       .catch(() => {
-        console.log("failure");
+        console.log("failure ");
       });
 
     }
