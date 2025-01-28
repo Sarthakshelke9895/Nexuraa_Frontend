@@ -71,7 +71,7 @@ app.post("/submit-form", upload.fields([{ name: "apkFile" }, { name: "image" }])
 });
 
 // Send Email Function
-async function sendEmail({ email, name, contact, AppDesc, AppName }) {
+function sendEmail({ email, name, contact, AppDesc, AppName }) {
   return new Promise((resolve, reject) => {
     var transporter = nodemailer.createTransport({
       service: "gmail",

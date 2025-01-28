@@ -18,7 +18,7 @@ import {
 function App(){
     return (
         <div > 
-            <link rel="stylesheet" href="/styles.css"/>
+          
 
 
            <Router>

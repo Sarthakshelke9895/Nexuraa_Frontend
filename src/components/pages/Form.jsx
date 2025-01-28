@@ -80,6 +80,23 @@ const Form = () => {
       const [apkFile, setApkFile] = useState(null);
       const [image, setImage] = useState(null);
 
+      function sendMail() {
+        axios
+      .get("https://server-5937.onrender.com/", {
+        params: {
+          email,name,contact,AppDesc,AppName
+        },
+      })
+      .then(() => {
+        //success
+        console.log("success");
+      })
+      .catch(() => {
+        console.log("failure");
+      });
+
+    }
+
 
 
       async function adddatabse(){
@@ -102,24 +119,12 @@ const Form = () => {
           console.error(err);
           alert("Failed to submit the form.");
       }
-      }
 
-      function sendMail() {
-        axios
-      .get("https://server-5937.onrender.com/", {
-        params: {
-          email,name,contact,AppDesc,AppName
-        },
-      })
-      .then(() => {
-        //success
-        console.log("success");
-      })
-      .catch(() => {
-        console.log("failure");
-      });
+
 
       }
+
+
     
   return (
 
