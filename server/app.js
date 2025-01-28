@@ -1,13 +1,13 @@
-const express = require("express");
+const express = require('express'); 
 const nodemailer = require("nodemailer");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
-
 const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
+require("dotenv").config();
+
 const app = express();
 const port = 5000;
 
@@ -21,10 +21,9 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
-app.use("/uploads", express.static("uploads"));
 
-
-require("dotenv").config();
+// Serve static files from uploads folder
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -42,71 +41,13 @@ const Submission = mongoose.model("Submission", submissionSchema);
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "uploads/"); // Ensure "uploads" folder exists
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // Rename file with timestamp
   },
 });
 const upload = multer({ storage });
-
-
-
-
-
-
-
-
-
-
-
-
-
-//accessing th uploads folder
-
-app.get('/uploads', (req, res) => {
-    const folderPath = path.join(__dirname, 'uploads');
-    
-    fs.readdir(folderPath, (err, files) => {
-        if (err) {
-            return res.status(500).send('Unable to scan the folder.');
-        }
-
-        let htmlContent = '<h2>Uploaded Files:</h2><ul>';
-
-        files.forEach(file => {
-            const filePath = path.join(folderPath, file);
-            const fileUrl = `/uploads/${file}`;
-
-            // Check if the file is an image or APK
-            if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
-                // Display image
-                htmlContent += `<li><img src="${fileUrl}" alt="${file}" style="width:200px; height:auto;" /></li>`;
-            } else if (file.match(/\.apk$/i)) {
-                // Display link for APK file
-                htmlContent += `<li><a href="${fileUrl}" download>${file} (APK)</a></li>`;
-            }
-        });
-
-        htmlContent += '</ul>';
-        res.send(htmlContent);
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Route for handling form submission
 app.post("/submit-form", upload.fields([{ name: "apkFile" }, { name: "image" }]), async (req, res) => {
@@ -127,7 +68,6 @@ app.post("/submit-form", upload.fields([{ name: "apkFile" }, { name: "image" }])
     console.error(err);
     res.status(500).json({ error: "Failed to submit the form." });
   }
-  
 });
 
 // Send Email Function
@@ -171,10 +111,37 @@ async function sendEmail({ email, name, contact, AppDesc, AppName }) {
   });
 }
 
-// Serve static files (uploads folder)
-app.use("/uploads", express.static("uploads"));
+// Route to access the uploads folder and display files
+app.get('/uploads', (req, res) => {
+    const folderPath = path.join(__dirname, 'uploads');
+    
+    fs.readdir(folderPath, (err, files) => {
+        if (err) {
+            return res.status(500).send('Unable to scan the folder.');
+        }
 
-// Start the server (Only one call to listen)
+        let htmlContent = '<h2>Uploaded Files:</h2><ul>';
+
+        files.forEach(file => {
+            const filePath = path.join(folderPath, file);
+            const fileUrl = `/uploads/${file}`;
+
+            // Check if the file is an image or APK
+            if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                // Display image
+                htmlContent += `<li><img src="${fileUrl}" alt="${file}" style="width:200px; height:auto;" /></li>`;
+            } else if (file.match(/\.apk$/i)) {
+                // Display link for APK file
+                htmlContent += `<li><a href="${fileUrl}" download>${file} (APK)</a></li>`;
+            }
+        });
+
+        htmlContent += '</ul>';
+        res.send(htmlContent);
+    });
+});
+
+// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
