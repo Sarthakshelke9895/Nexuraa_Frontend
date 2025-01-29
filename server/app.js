@@ -48,8 +48,13 @@ const storage = multer.diskStorage({
     cb(null, "uploads/"); // Ensure "uploads" folder exists
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Rename file with timestamp
-  },
+    const originalName = path.parse(file.originalname).name; // Extract the file name without extension
+    const extension = path.extname(file.originalname); // Extract the file extension
+    const timestamp = Date.now(); // Get the current timestamp
+
+    // Rename file to: original name + timestamp + extension
+    cb(null, `${originalName}_${timestamp}${extension}`);
+},
 });
 const upload = multer({ storage });
 
@@ -184,46 +189,57 @@ app.get('/uploads', (req, res) => {
                   body {
                       font-family: Arial, sans-serif;
                       background-color: #f4f4f4;
-                      text-align: center;
+                      text-align:center;
                       padding: 20px;
                   }
                   h2 {
                       color: #333;
+                      margin-bottom: 30px;
                   }
-                  ul {
-                      list-style: none;
-                      padding: 0;
+                  .container {
+                      display: grid;
+                      grid-template-columns: repeat(3, 1fr);
+                      gap: 20px;
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      padding: 20px;
                   }
-                  li {
+                  .file-item {
                       background: #fff;
-                      padding: 15px;
-                      margin: 10px auto;
-                      width: 30%;
-                      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                      padding: 20px;
                       border-radius: 10px;
+                      box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
                       transition: transform 0.3s, box-shadow 0.3s;
                       text-align: left;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: left;
                   }
-                  li:hover {
-                      transform: scale(1.01);
-                      box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+                  .file-item:hover {
+                    background-color: #f4f4f4;
+                      box-shadow: 0 0px 5px rgba(0, 0, 0, 0.15);
+                      cursor:pointer;
+                  }
+                  .file-info {
+                      font-size: 18px;
+                      color: #555;
+                      margin: 5px 0;
+                  }
+                  .file-media {
+                      margin-top: 10px;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: left;
                   }
                   img {
                       width: 100px;
                       height: 100px;
                       object-fit: cover;
                       border-radius: 8px;
-                      display: block;
-                      margin: 10px 0;
-                  }
-                  .file-info {
-                      font-size: 14px;
-                      color: #555;
+                      margin-bottom: 10px;
                   }
                   .download-btn {
-                      display: inline-block;
-                      padding: 8px 15px;
-                      margin-top: 10px;
+                      padding: 10px 15px;
                       font-size: 14px;
                       font-weight: bold;
                       color: white;
@@ -233,15 +249,42 @@ app.get('/uploads', (req, res) => {
                       cursor: pointer;
                       text-decoration: none;
                       transition: background-color 0.3s;
+                      margin-top: 10px;
                   }
                   .download-btn:hover {
                       background-color: #0056b3;
+                  }
+                  .delete-btn {
+                      padding: 8px 12px;
+                      font-size: 14px;
+                      font-weight: bold;
+                      color: white;
+                      background-color: red;
+                      border: none;
+                      border-radius: 5px;
+                      cursor: pointer;
+                      text-decoration: none;
+                      margin-top: 10px;
+                      margin-right: 250px;
+                  }
+                  .delete-btn:hover {
+                      background-color: darkred;
+                  }
+                  @media (max-width: 768px) {
+                      .container {
+                          grid-template-columns: repeat(2, 1fr);
+                      }
+                  }
+                  @media (max-width: 480px) {
+                      .container {
+                          grid-template-columns: 1fr;
+                      }
                   }
               </style>
           </head>
           <body>
               <h2>Uploaded Files</h2>
-              <ul>
+              <div class="container">
       `;
 
       files.forEach((file, index) => {
@@ -252,31 +295,52 @@ app.get('/uploads', (req, res) => {
 
           const fileId = new Date().getTime() + index; // Unique ID using timestamp
 
-          htmlContent += `<li>
+          htmlContent += `<div class="file-item" id="file-${fileId}">
               <strong>File ID:</strong> ${fileId} <br/>
               <span class="file-info">File Name: ${file}</span><br/>
               <span class="file-info">Last Updated: ${uploadTime}</span><br/>
-              <span class="file-info">File Size: ${fileSize} KB</span><br/>`;
+              <span class="file-info">File Size: ${fileSize} KB</span><br/>
+              <div class="file-media">`;
 
-          // Display the file content
+          // Display both image and APK file in the same div
           if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
               htmlContent += `<img src="${fileUrl}" alt="${file}"/>`;
-          } else if (file.match(/\.apk$/i)) {
+          }
+          if (file.match(/\.apk$/i)) {
               htmlContent += `<a href="${fileUrl}" download class="download-btn">Download APK</a>`;
           }
 
-          htmlContent += `</li>`;
+          // Add delete button for the file
+          htmlContent += `
+              <form method="POST" action="/delete/${file}">
+                  <button type="submit" class="delete-btn">Delete File</button>
+              </form>
+          </div></div>`;
       });
 
-      htmlContent += `
-              </ul>
-          </body>
-          </html>
-      `;
+      htmlContent += `</div></body></html>`;
 
       res.send(htmlContent);
   });
 });
+
+// Endpoint to handle file deletion
+app.post('/delete/:filename', (req, res) => {
+  const fileName = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', fileName);
+
+  // Delete the file
+  fs.unlink(filePath, (err) => {
+      if (err) {
+          return res.status(500).send('Failed to delete the file.');
+      }
+
+      // After deletion, redirect to the upload page to reflect the changes
+      res.redirect('/uploads');
+  });
+});
+
+
 
 
 
