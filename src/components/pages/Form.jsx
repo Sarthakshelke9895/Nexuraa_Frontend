@@ -117,7 +117,7 @@ const Form = () => {
           console.log(response.data.message);
       } catch (err) {
           console.error(err);
-          console.log("Failed to submit the form.");
+          alert("Failed to submit the form.");
       }
 
 
