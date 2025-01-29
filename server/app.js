@@ -174,6 +174,10 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
 // Route to access the uploads folder and display files
 
 app.get('/uploads', (req, res) => {
+
+  if(!req.file){
+    return res.status(400).send('No file uploaded.');
+  }
   const folderPath = path.join(__dirname, 'uploads');
   
   fs.readdir(folderPath, (err, files) => {
@@ -322,6 +326,7 @@ app.get('/uploads', (req, res) => {
 
       res.send(htmlContent);
   });
+  res.send(`File ${req.file.filename} uploaded successfully.`);
 });
 
 // Endpoint to handle file deletion
