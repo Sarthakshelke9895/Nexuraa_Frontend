@@ -171,100 +171,26 @@ app.get('/uploads', (req, res) => {
             return res.status(500).send('Unable to scan the folder.');
         }
 
-        let htmlContent = `
-            <html>
-            <head>
-                <title>Uploaded Files</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f4f4f4;
-                        text-align: center;
-                        padding: 20px;
-                    }
-                    h2 {
-                        color: #333;
-                    }
-                    ul {
-                        list-style: none;
-                        padding: 0;
-                    }
-                    li {
-                        background: #fff;
-                        padding: 15px;
-                        margin: 10px auto;
-                        width: 50%;
-                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-                        border-radius: 10px;
-                        transition: transform 0.3s, box-shadow 0.3s;
-                        text-align: left;
-                    }
-                    li:hover {
-                        transform: scale(1.03);
-                        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-                    }
-                    img {
-                        max-width: 100%;
-                        height: auto;
-                        border-radius: 8px;
-                        display: block;
-                        margin: 10px 0;
-                    }
-                    .file-info {
-                        font-size: 14px;
-                        color: #555;
-                    }
-                    .download-btn {
-                        display: inline-block;
-                        padding: 8px 15px;
-                        margin-top: 10px;
-                        font-size: 14px;
-                        font-weight: bold;
-                        color: white;
-                        background-color: #007BFF;
-                        border: none;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        text-decoration: none;
-                        transition: background-color 0.3s;
-                    }
-                    .download-btn:hover {
-                        background-color: #0056b3;
-                    }
-                </style>
-            </head>
-            <body>
-                <h2>Uploaded Files</h2>
-                <ul>
-        `;
+        let htmlContent = '<h2>Uploaded Files:</h2><ul>';
 
-        files.forEach((file, index) => {
+        files.forEach(file => {
+            const filePath = path.join(folderPath, file);
             const fileUrl = `/uploads/${file}`;
-            const fileId = new Date().getTime() + index; // Unique ID using timestamp
 
-            htmlContent += `<li>
-                <strong>File ID:</strong> ${fileId} <br/>
-                <span class="file-info">File Name: ${file}</span><br/>`;
-
+            // Check if the file is an image or APK
             if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
-                htmlContent += `<img src="${fileUrl}" alt="${file}"/>`;
+                // Display image
+                htmlContent += `<li><img src="${fileUrl}" alt="${file}" style="width:200px; height:auto;" /></li>`;
             } else if (file.match(/\.apk$/i)) {
-                htmlContent += `<a href="${fileUrl}" download class="download-btn">Download APK</a>`;
+                // Display link for APK file
+                htmlContent += `<li><a href="${fileUrl}" download>${file} (APK)</a></li>`;
             }
-
-            htmlContent += `</li>`;
         });
 
-        htmlContent += `
-                </ul>
-            </body>
-            </html>
-        `;
-
+        htmlContent += '</ul>';
         res.send(htmlContent);
     });
 });
-
 
 
 app.get("/", (req, res) => {
