@@ -167,6 +167,7 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
 }
 
 // Route to access the uploads folder and display files
+
 app.get('/uploads', (req, res) => {
   const folderPath = path.join(__dirname, 'uploads');
   
@@ -197,19 +198,20 @@ app.get('/uploads', (req, res) => {
                       background: #fff;
                       padding: 15px;
                       margin: 10px auto;
-                      width: 50%;
+                      width: 30%;
                       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
                       border-radius: 10px;
                       transition: transform 0.3s, box-shadow 0.3s;
                       text-align: left;
                   }
                   li:hover {
-                      transform: scale(1.03);
+                      transform: scale(1.01);
                       box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
                   }
                   img {
-                      max-width: 100%;
-                      height: auto;
+                      width: 100px;
+                      height: 100px;
+                      object-fit: cover;
                       border-radius: 8px;
                       display: block;
                       margin: 10px 0;
@@ -244,12 +246,19 @@ app.get('/uploads', (req, res) => {
 
       files.forEach((file, index) => {
           const fileUrl = `/uploads/${file}`;
+          const fileStat = fs.statSync(path.join(folderPath, file));
+          const uploadTime = new Date(fileStat.mtime).toLocaleString();  // Get last modified time
+          const fileSize = (fileStat.size / 1024).toFixed(2);  // File size in KB
+
           const fileId = new Date().getTime() + index; // Unique ID using timestamp
 
           htmlContent += `<li>
               <strong>File ID:</strong> ${fileId} <br/>
-              <span class="file-info">File Name: ${file}</span><br/>`;
+              <span class="file-info">File Name: ${file}</span><br/>
+              <span class="file-info">Last Updated: ${uploadTime}</span><br/>
+              <span class="file-info">File Size: ${fileSize} KB</span><br/>`;
 
+          // Display the file content
           if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
               htmlContent += `<img src="${fileUrl}" alt="${file}"/>`;
           } else if (file.match(/\.apk$/i)) {
@@ -268,6 +277,7 @@ app.get('/uploads', (req, res) => {
       res.send(htmlContent);
   });
 });
+
 
 
 
