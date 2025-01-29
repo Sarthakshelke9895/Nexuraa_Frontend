@@ -149,7 +149,7 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
     transporter.sendMail(mail_configs, function (error, info) {
       if (error) {
         console.log(error);
-        return reject({ message: `Welcome to Backend ` });
+        return reject({ message: `An error has occurred` });
       }
       transporter.sendMail(mail_configs_admin, function (error2, info2) {
         if (error2) {
@@ -193,7 +193,11 @@ app.get('/uploads', (req, res) => {
 });
 
 
-
+app.get("/", (req, res) => {
+  sendEmail(req.query)
+    .then((response) => res.send(response.message))
+    .catch((error) => res.status(500).send(error.message));
+});
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
