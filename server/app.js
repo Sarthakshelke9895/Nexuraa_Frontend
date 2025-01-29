@@ -52,35 +52,20 @@ const upload = multer({ storage });
 // Route for handling form submission
 app.post("/submit-form", upload.fields([{ name: "apkFile" }, { name: "image" }]), async (req, res) => {
   try {
-    // Check if files are present
-    if (!req.files.apkFile || !req.files.image) {
-      return res.status(400).json({ error: "Files are missing." });
-    }
-
-    // Destructure values from the request body and files
     const { email } = req.body;
     const apkFile = req.files.apkFile[0].filename;
     const image = req.files.image[0].filename;
 
     // Save to database
     const newSubmission = new Submission({ email, apkFile, image });
-    await newSubmission.save().catch((err) => {
-      console.error("Database save error:", err);
-      return res.status(500).json({ error: "Failed to save to database." });
-    });
+    await newSubmission.save();
 
     // Send confirmation email
-    try {
-      await sendEmail(req.body);
-    } catch (emailError) {
-      console.error("Email sending error:", emailError);
-      return res.status(500).json({ error: "Failed to send confirmation email." });
-    }
+    await sendEmail(req.body);
 
-    // Success response
     res.status(201).json({ message: "Form submitted successfully!" });
   } catch (err) {
-    console.error("General error:", err);
+    console.error(err);
     res.status(500).json({ error: "Failed to submit the form." });
   }
 });
@@ -164,7 +149,7 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
     transporter.sendMail(mail_configs, function (error, info) {
       if (error) {
         console.log(error);
-        return reject({ message: `An error has occurred` });
+        return reject({ message: `Welcome to Backend ` });
       }
       transporter.sendMail(mail_configs_admin, function (error2, info2) {
         if (error2) {
