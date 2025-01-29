@@ -52,20 +52,35 @@ const upload = multer({ storage });
 // Route for handling form submission
 app.post("/submit-form", upload.fields([{ name: "apkFile" }, { name: "image" }]), async (req, res) => {
   try {
+    // Check if files are present
+    if (!req.files.apkFile || !req.files.image) {
+      return res.status(400).json({ error: "Files are missing." });
+    }
+
+    // Destructure values from the request body and files
     const { email } = req.body;
     const apkFile = req.files.apkFile[0].filename;
     const image = req.files.image[0].filename;
 
     // Save to database
     const newSubmission = new Submission({ email, apkFile, image });
-    await newSubmission.save();
+    await newSubmission.save().catch((err) => {
+      console.error("Database save error:", err);
+      return res.status(500).json({ error: "Failed to save to database." });
+    });
 
     // Send confirmation email
-    await sendEmail(req.body);
+    try {
+      await sendEmail(req.body);
+    } catch (emailError) {
+      console.error("Email sending error:", emailError);
+      return res.status(500).json({ error: "Failed to send confirmation email." });
+    }
 
+    // Success response
     res.status(201).json({ message: "Form submitted successfully!" });
   } catch (err) {
-    console.error(err);
+    console.error("General error:", err);
     res.status(500).json({ error: "Failed to submit the form." });
   }
 });
