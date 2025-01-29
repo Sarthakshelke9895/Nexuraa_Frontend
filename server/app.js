@@ -29,6 +29,17 @@ app.use((req, res, next) => {
 // Serve static files from uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+
+
+const uploadDir = path.join(__dirname, 'uploads');
+
+// Check if the directory exists, and if not, create it
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true }); // { recursive: true } to create nested directories if needed
+}
+const uploadPath = path.join(__dirname, 'uploads', 'SS-Dryfruits_1738157716631.apk');
+
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
