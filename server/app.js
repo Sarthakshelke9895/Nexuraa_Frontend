@@ -192,6 +192,19 @@ app.get('/uploads', (req, res) => {
           return res.status(500).send('Unable to scan the folder.');
       }
 
+      let fileList = files.map(file => {
+          const filePath = path.join(folderPath, file);
+          const stats = fs.statSync(filePath);
+          return {
+              name: file,
+              size: (stats.size / 1024).toFixed(2) + ' KB', // Convert bytes to KB
+              lastModified: stats.mtime.toLocaleString(),
+              path: `/uploads/${file}`
+          };
+      });
+
+      fileList.sort((a, b) => b.lastModified.localeCompare(a.lastModified));
+
       let htmlContent = `
           <html>
           <head>
@@ -199,157 +212,141 @@ app.get('/uploads', (req, res) => {
               <style>
                   body {
                       font-family: Arial, sans-serif;
-                      background-color:  #fff;
-                      text-align:center;
+                      background-color: #f8f9fa;
+                      text-align: left;
                       padding: 20px;
+                    
+                      display:flex;
+                      align-items:left;
+                      flex-direction: column;
                   }
                   h2 {
-                      color: #333;
+                      color: #222;
                       margin-bottom: 30px;
+                      text-align: center;
                   }
                   .container {
-                      display: grid;
-                      grid-template-columns: repeat(3, 1fr);
+                      display: flex;
+                      flex-direction:column;
                       gap: 20px;
-                      max-width: 1200px;
+                      width:700px;
                       margin: 0 auto;
                       padding: 20px;
+                   
+
                   }
                   .file-item {
                       background: #fff;
-                      padding: 20px;
+                      padding: 15px;
                       border-radius: 10px;
-                      box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-                      transition: transform 0.3s, box-shadow 0.3s;
-                      text-align: left;
+                      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;
                       display: flex;
-                      flex-direction: column;
-                      align-items: left;
+                      justify-content: space-between;
+                      align-items: center;
+                      flex-wrap: wrap;
                   }
                   .file-item:hover {
-                    background-color: #f4f4f4;
-                      box-shadow: 0 0px 5px rgba(0, 0, 0, 0.15);
-                      cursor:pointer;
+                      background-color: #f4f4f4;
+                      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+                      transform: translateY(-1px);
+                      cursor: pointer;
                   }
                   .file-info {
-                      font-size: 18px;
-                      color: #555;
-                      margin: 5px 0;
-                  }
-                  .file-media {
-                      margin-top: 10px;
                       display: flex;
                       flex-direction: column;
-                      align-items: left;
                   }
-                  img {
-                      width: 100px;
-                      height: 100px;
-                      object-fit: cover;
-                      border-radius: 8px;
-                      margin-bottom: 10px;
+                  .buttons {
+                      display: flex;
+                      gap: 10px;
                   }
-                  .download-btn {
-                      padding: 10px 15px;
-                      font-size: 14px;
-                      font-weight: bold;
-                      color: white;
-                      background-color: #007BFF;
-                      border: none;
-                      border-radius: 5px;
-                      cursor: pointer;
-                      text-decoration: none;
-                      transition: background-color 0.3s;
-                      margin-top: 10px;
-                  }
-                  .download-btn:hover {
-                      background-color: #0056b3;
-                  }
-                  .delete-btn {
+                  .download-btn, .delete-btn {
                       padding: 8px 12px;
                       font-size: 14px;
                       font-weight: bold;
                       color: white;
-                      background-color: red;
                       border: none;
                       border-radius: 5px;
                       cursor: pointer;
                       text-decoration: none;
-                      margin-top: 10px;
-                      margin-right: 250px;
+                      transition: background-color 0.3s ease, transform 0.2s ease;
+                  }
+                  .download-btn {
+                      background-color: #007BFF;
+                  }
+                  .download-btn:hover {
+                      background-color: #0056b3;
+                      transform: scale(1.02);
+                  }
+                  .delete-btn {
+                      background-color: red;
                   }
                   .delete-btn:hover {
                       background-color: darkred;
-                  }
-                  @media (max-width: 768px) {
-                      .container {
-                          grid-template-columns: repeat(2, 1fr);
-                      }
-                  }
-                  @media (max-width: 480px) {
-                      .container {
-                          grid-template-columns: 1fr;
-                      }
+                      transform: scale(1.05);
                   }
               </style>
+              <script>
+                  function deleteFile(fileName) {
+                      const password = prompt("Enter password to delete:");
+                      if (!password) {
+                          alert("Password is required!");
+                          return;
+                      }
+                      fetch('/delete', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ fileName, password })
+                      })
+                      .then(response => response.text())
+                      .then(message => {
+                          alert(message);
+                          location.reload();
+                      })
+                      .catch(error => console.error('Error:', error));
+                  }
+              </script>
           </head>
           <body>
               <h2>Uploaded Files</h2>
               <div class="container">
       `;
 
-      files.forEach((file, index) => {
-          const fileUrl = `/uploads/${file}`;
-          const fileStat = fs.statSync(path.join(folderPath, file));
-          const uploadTime = new Date(fileStat.mtime).toLocaleString();  // Get last modified time
-          const fileSize = (fileStat.size / 1024).toFixed(2);  // File size in KB
-
-          const fileId = new Date().getTime() + index; // Unique ID using timestamp
-
-          htmlContent += `<div class="file-item" id="file-${fileId}">
-              <strong>File ID:</strong> ${fileId} <br/>
-              <span class="file-info">File Name: ${file}</span><br/>
-              <span class="file-info">Last Updated: ${uploadTime}</span><br/>
-              <span class="file-info">File Size: ${fileSize} KB</span><br/>
-              <div class="file-media">`;
-
-          // Display both image and APK file in the same div
-          if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
-              htmlContent += `<img src="${fileUrl}" alt="${file}"/>`;
-          }
-          if (file.match(/\.apk$/i)) {
-              htmlContent += `<a href="${fileUrl}" download class="download-btn">Download APK</a>`;
-          }
-
-          // Add delete button for the file
-          htmlContent += `
-              <form method="POST" action="/delete/${file}">
-                  <button type="submit" class="delete-btn">Delete File</button>
-              </form>
-          </div></div>`;
+      fileList.forEach((file, index) => {
+          htmlContent += `<div class="file-item">
+              <div class="file-info">
+                  <strong>SR No:</strong> ${index + 1} <br/>
+                  <strong>File Name:</strong> ${file.name} <br/>
+                  <strong>Size:</strong> ${file.size} <br/>
+                  <strong>Last Modified:</strong> ${file.lastModified} <br/>
+              </div>
+              <div class="buttons">
+                  <a href="${file.path}" download class="download-btn">Download</a>
+                  <button class="delete-btn" onclick="deleteFile('${file.name}')">Delete</button>
+              </div>
+          </div>`;
       });
 
       htmlContent += `</div></body></html>`;
-
       res.send(htmlContent);
   });
 });
 
-// Endpoint to handle file deletion
-app.post('/delete/:filename', (req, res) => {
-  const fileName = req.params.filename;
-  const filePath = path.join(__dirname, 'uploads', fileName);
-
-  // Delete the file
-  fs.unlink(filePath, (err) => {
-      if (err) {
-          return res.status(500).send('Failed to delete the file.');
-      }
-
-      // After deletion, redirect to the upload page to reflect the changes
-      res.redirect('/uploads');
-  });
+app.post('/delete', (req, res) => {
+    const { fileName, password } = req.body;
+    if (password !== 'ss') {
+        return res.status(403).send("Incorrect password");
+    }
+    
+    const filePath = path.join(__dirname, 'uploads', fileName);
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            return res.status(500).send("Error deleting file");
+        }
+        res.send("File deleted successfully");
+    });
 });
+
 
 
 
