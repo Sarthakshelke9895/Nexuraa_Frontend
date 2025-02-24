@@ -383,6 +383,14 @@ app.get('/uploads', (req, res) => {
                   background-color:#212EU0;
                 }
 
+                .color-dot {
+                  width: 25px;
+                  height: 25px;
+                  border-radius: 50%;
+                  position: relative;
+                  margin-bottom:10px;
+                  
+              }
                 
               </style>
               <script>
@@ -450,12 +458,29 @@ app.get('/uploads', (req, res) => {
 
       `;
 
+      function getRandomColor() {
+        return `#${Math.floor(Math.random() * 16777215).toString(16)}`; // Generate a hex color
+    }
+
+    let colorMap = {}; // Store colors for each pair (without persistence)
+    fileList.forEach((file, index) => {
+        let pairIndex = Math.floor(index / 2); // Ensure same color for every two files
+
+        if (!colorMap[pairIndex]) {
+            colorMap[pairIndex] = getRandomColor(); // Assign a new color to each pair
+        }
+    });
+
+
       fileList.forEach((file, index) => {
         // Generate a unique ID for every two files (same ID for index 0 & 1, then 2 & 3, etc.)
-        const uniqueId = Math.floor(index / 2) + 1000; // Generates IDs like 1000, 1001, 1002...
+        const uniqueId = Math.floor(index / 2) + 1000;
+        let pairIndex = Math.floor(index / 2);
+            const color = colorMap[pairIndex]; // Retrieve the assigned color // Generates IDs like 1000, 1001, 1002...
     
         htmlContent += `<div class="file-item">
             <div class="file-info">
+            <div class="color-dot" style="background: ${color};"></div> 
                 <strong>Unique ID:</strong> ${uniqueId} <br/>
                 <strong>File Name:</strong> ${file.name} <br/>
                 <strong>Size:</strong> ${file.size} <br/>
