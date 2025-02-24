@@ -85,14 +85,14 @@ const Navbar = () => {
           offset={-300} 
           duration={500} 
           >
-          Projects
+          Uploads
           <span className="underline"></span>
           
           </Link>
         </li>
         <li  className='nav-link' onClick={handleUploadClick} >
          
-         Uploads
+         Get App
          <span className="underline"></span>
           
         </li>

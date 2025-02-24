@@ -210,93 +210,213 @@ app.get('/uploads', (req, res) => {
           <head>
               <title>Uploaded Files</title>
               <style>
+              @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
                   body {
-                      font-family: Arial, sans-serif;
-                      background-color: #f8f9fa;
-                      text-align: left;
+                    font-family: "Outfit","sans-serif";
+                      background-color:#ffffff;
                       padding: 20px;
-                    
                       display:flex;
-                      align-items:left;
                       flex-direction: column;
-                  }
-                  h2 {
-                      color: #222;
-                      margin-bottom: 30px;
-                      text-align: center;
-                  }
-                  .container {
-                      display: flex;
-                      flex-direction:column;
-                      gap: 20px;
-                      width:700px;
-                      margin: 0 auto;
-                      padding: 20px;
-                   
+                      align-items: flex-start;
+
 
                   }
-                  .file-item {
-                      background: #fff;
-                      padding: 15px;
-                      border-radius: 10px;
-                      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                      transition: transform 0.3s ease, box-shadow 0.3s ease;
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      flex-wrap: wrap;
+                  h2 {
+                      color: #212EA0;
+                      margin-bottom: 30px;
+                      text-align: left;
+                      margin-left:15px;
                   }
-                  .file-item:hover {
-                      background-color: #f4f4f4;
-                      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-                      transform: translateY(-1px);
-                      cursor: pointer;
-                  }
-                  .file-info {
-                      display: flex;
-                      flex-direction: column;
-                  }
-                  .buttons {
-                      display: flex;
-                      gap: 10px;
-                  }
-                  .download-btn, .delete-btn {
-                      padding: 8px 12px;
-                      font-size: 14px;
-                      font-weight: bold;
-                      color: white;
-                      border: none;
-                      border-radius: 5px;
-                      cursor: pointer;
-                      text-decoration: none;
-                      transition: background-color 0.3s ease, transform 0.2s ease;
-                  }
+                  .container {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+                    gap: 20px;
+                    width: 100%;
+                    padding: 10px;
+                }
+                
+                /* Each file box */
+                .file-item {
+                    background: #fff;
+                    padding: 15px;
+                    border-radius: 10px;
+                    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.2);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                    min-height: 80px; /* Keeps all items aligned */
+                    word-wrap: break-word;
+                }
+                
+                /* Hover effect */
+                .file-item:hover {
+                    background-color: #f4f4f4;
+                    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+                }
+                
+                /* File information */
+                .file-info {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1; /* Ensures it takes up available space */
+                    overflow: hidden; /* Prevents text from overflowing */
+                }
+                
+                /* File name */
+                .file-info .file-name {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 100%; /* Prevents breaking layout */
+                }
+                
+                /* Button container */
+                .buttons {
+                    display: flex;
+                    gap: 10px;
+                    flex-direction: column; /* Fixes stacking issue */
+                    flex-shrink: 0; /* Prevents buttons from shrinking */
+                }
+                
+                /* Buttons styling */
+                .download-btn, .delete-btn {
+                    padding: 8px 12px;
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    text-decoration: none;
+                    background-color: #007BFF; /* Blue theme */
+                }
+                
+                /* Delete button (red) */
+                .delete-btn {
+                    background-color: #FF4C4C;
+                }
+                
+                /* Responsive: 1 column layout for small screens */
+                @media (max-width: 480px) {
+                    .container {
+                        grid-template-columns: 1fr; /* Switch to single column */
+                    }
+                }
+                
                   .download-btn {
                       background-color: #007BFF;
                   }
                   .download-btn:hover {
                       background-color: #0056b3;
-                      transform: scale(1.02);
+                      
                   }
                   .delete-btn {
                       background-color: red;
                   }
                   .delete-btn:hover {
                       background-color: darkred;
-                      transform: scale(1.05);
+                      
                   }
+                  .modal {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 200;
+                }
+                
+                .modal-content {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                    width: 300px;
+                    color:#212EA0;
+                }
+                
+                .modal input {
+                    width: 100%;
+                    padding:10px;
+                    margin-top:10px;
+                    display: block;
+                    background-color: #f0f0f0;
+                    border-radius:4px;
+                    border:0;
+                    outline:0;
+                }
+               
+                
+                .modal-buttons {
+                    margin-top: 15px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:flex-start;
+                }
+                #modalText{
+                  color:black;
+                  text-align:left;
+                }
+
+                
+                .modal-buttons button {
+                    
+                    margin: 5px;
+                    cursor: pointer;
+                    background-color: #212EA0;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    color: rgb(255, 255, 255);
+                    
+                    border:0;
+                    outline:0;
+                }
+                
+                .modal-buttons button : hover{
+                  cursor:pointer;
+                  background-color:#212EU0;
+                }
+
+                
               </style>
               <script>
-                  function deleteFile(fileName) {
-                      const password = prompt("Enter password to delete:");
+              let currentAction = null;
+              let currentFile = null;
+              
+              function openModal(action, fileName) {
+                  currentAction = action;
+                  currentFile = fileName;
+                  document.getElementById("modalTitle").textContent = action === 'delete' ? "Delete File" : "Download File";
+                  document.getElementById("modalText").textContent = action === 'delete' 
+                      ? "Enter Admin password to delete the file:" 
+                      : "Are you sure you want to download this file?";
+                  
+                  document.getElementById("modalInput").style.display = action === 'delete' ? "block" : "none";
+                  document.getElementById("customModal").style.display = "flex";
+              }
+              
+              function closeModal() {
+                  document.getElementById("customModal").style.display = "none";
+              }
+              
+              function confirmAction(fileName) {
+                  if (currentAction === 'delete') {
+                      const password = document.getElementById("modalInput").value;
                       if (!password) {
                           alert("Password is required!");
                           return;
                       }
+                      
                       fetch('/delete', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ fileName, password })
+                          body: JSON.stringify({ fileName: currentFile, password })
                       })
                       .then(response => response.text())
                       .then(message => {
@@ -304,28 +424,50 @@ app.get('/uploads', (req, res) => {
                           location.reload();
                       })
                       .catch(error => console.error('Error:', error));
-                  }
+              
+                  } 
+              
+                  closeModal();
+              }
+              
               </script>
           </head>
           <body>
-              <h2>Uploaded Files</h2>
+              <h2>Uploaded Files:</h2>
               <div class="container">
+              <!-- Modal for Password Confirmation -->
+<div id="customModal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Confirm Action</h2>
+        <p id="modalText"></p>
+        <input type="password" id="modalInput" placeholder="Enter password">
+        <div class="modal-buttons">
+            <button onclick="confirmAction()">Confirm</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
       `;
 
       fileList.forEach((file, index) => {
-          htmlContent += `<div class="file-item">
-              <div class="file-info">
-                  <strong>SR No:</strong> ${index + 1} <br/>
-                  <strong>File Name:</strong> ${file.name} <br/>
-                  <strong>Size:</strong> ${file.size} <br/>
-                  <strong>Last Modified:</strong> ${file.lastModified} <br/>
-              </div>
-              <div class="buttons">
-                  <a href="${file.path}" download class="download-btn">Download</a>
-                  <button class="delete-btn" onclick="deleteFile('${file.name}')">Delete</button>
-              </div>
-          </div>`;
-      });
+        // Generate a unique ID for every two files (same ID for index 0 & 1, then 2 & 3, etc.)
+        const uniqueId = Math.floor(index / 2) + 1000; // Generates IDs like 1000, 1001, 1002...
+    
+        htmlContent += `<div class="file-item">
+            <div class="file-info">
+                <strong>Unique ID:</strong> ${uniqueId} <br/>
+                <strong>File Name:</strong> ${file.name} <br/>
+                <strong>Size:</strong> ${file.size} <br/>
+                <strong>Last Modified:</strong> ${file.lastModified} <br/>
+            </div>
+            <div class="buttons">
+                <a href="${file.path}" download class="download-btn">Download</a>
+                <button class="delete-btn" onclick="openModal('delete', '${file.name}')">Delete</button>
+            </div>
+        </div>`;
+    });
+    
 
       htmlContent += `</div></body></html>`;
       res.send(htmlContent);
@@ -334,7 +476,7 @@ app.get('/uploads', (req, res) => {
 
 app.post('/delete', (req, res) => {
     const { fileName, password } = req.body;
-    if (password !== 'ss') {
+    if (password !== 'Nexuraa') {
         return res.status(403).send("Incorrect password");
     }
     

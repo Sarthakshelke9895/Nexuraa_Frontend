@@ -44,9 +44,9 @@ const Contact = () => {
          to us as we strive to provide exceptional service to our university community
         </p>
         <ul>
-          <li><img src={mail_icon} alt="" /> sarthakshelke044@gmail.com</li>
+          <li><img src={mail_icon} alt="" />nexura.com@gmail.com  </li>
           <li> <img src={phone_icon} alt="" />+91 9359955164</li>
-          <li><img src={location_icon} alt="" /> Zeal Polytechnic,Narhe,Pune</li>
+          <li><img src={location_icon} alt="" />Mystique Wonders,B-503,narhe,Pune - 411041</li>
         </ul>
       </div>
       <div className="contact_col1">
