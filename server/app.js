@@ -204,7 +204,15 @@ app.get('/uploads', (req, res) => {
           return {
               name: file,
               size: formattedSize, // Convert bytes to MB
-              lastModified: new Date(stats.mtime).toLocaleString(),
+              lastModified: new Intl.DateTimeFormat('en-US', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }).format(stats.mtime),
               path: `/uploads/${file}`
           };
       });
