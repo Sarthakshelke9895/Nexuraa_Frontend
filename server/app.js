@@ -481,6 +481,7 @@ app.get('/uploads', (req, res) => {
     </div>
 </div>
 
+
       `;
 
       function getRandomColor() {
