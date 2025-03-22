@@ -204,7 +204,8 @@ app.get('/uploads', (req, res) => {
           return {
               name: file,
               size: formattedSize, // Convert bytes to MB
-              lastModified: new Intl.DateTimeFormat('en-US', { 
+              lastModified: new Date(stats.mtime).toLocaleString('en-US', { 
+                timeZone: 'Asia/Kolkata', // Change to your correct time zone
                 year: 'numeric', 
                 month: '2-digit', 
                 day: '2-digit', 
@@ -212,7 +213,7 @@ app.get('/uploads', (req, res) => {
                 minute: '2-digit', 
                 second: '2-digit', 
                 hour12: true 
-            }).format(stats.mtime),
+            }),
               path: `/uploads/${file}`
           };
       });
