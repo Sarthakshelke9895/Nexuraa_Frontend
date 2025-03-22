@@ -34,9 +34,9 @@ const Paymentpage = () => {
         </nav>
 
         <div className="payment-container">
-      <h1 className="payment-header">Upload Your App</h1>
+      <h1 className="payment-header">Upload Service Cost</h1>
       <p className="payment-subtext">
-        Pay <strong>21.00</strong> INR to get your app listed on our platform.Also Check the Email for Further Proceedings.If E-mail does not pop up kindly check your spam folder. 
+        Pay <strong>21.00</strong> INR to get your app listed on our platform. Also Check the Email for Further Proceedings.If E-mail does not pop up kindly check your spam folder. 
       </p>
       <button onClick={handleRedirect} className="pay-button">
         Pay <strong>21.00</strong> INR

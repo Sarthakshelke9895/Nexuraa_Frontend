@@ -195,10 +195,16 @@ app.get('/uploads', (req, res) => {
       let fileList = files.map(file => {
           const filePath = path.join(folderPath, file);
           const stats = fs.statSync(filePath);
+          let fileSizeInMB = stats.size / (1024 * 1024); // Convert to MB
+
+          let formattedSize =
+              fileSizeInMB < 1
+                    ? (stats.size / 1024).toFixed(2) + " KB"  // Show in KB if less than 1 MB
+                    : fileSizeInMB.toFixed(2) + " MB"; // Show in MB otherwise
           return {
               name: file,
-              size: (stats.size / 1024).toFixed(2) + ' KB', // Convert bytes to KB
-              lastModified: stats.mtime.toLocaleString(),
+              size: formattedSize, // Convert bytes to MB
+              lastModified: new Date(stats.mtime).toLocaleString(),
               path: `/uploads/${file}`
           };
       });
@@ -214,25 +220,25 @@ app.get('/uploads', (req, res) => {
                   body {
                     font-family: "Outfit","sans-serif";
                       background-color:#ffffff;
-                      padding: 20px;
+                      
                       display:flex;
                       flex-direction: column;
-                      align-items: flex-start;
+                      align-items: center;
 
 
                   }
                   h2 {
                       color: #212EA0;
                       margin-bottom: 30px;
-                      text-align: left;
-                      margin-left:15px;
+                      align-self: flex-start; 
+                      margin-left:20px;
                   }
                   .container {
                     display: grid;
                     grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
                     gap: 20px;
-                    width: 100%;
-                    padding: 10px;
+                    width: 98%;
+                    
                 }
                 
                 /* Each file box */
@@ -373,7 +379,7 @@ app.get('/uploads', (req, res) => {
                     padding: 10px 20px;
                     border-radius: 8px;
                     color: rgb(255, 255, 255);
-                    
+                   
                     border:0;
                     outline:0;
                 }
@@ -382,10 +388,20 @@ app.get('/uploads', (req, res) => {
                   cursor:pointer;
                   background-color:#212EU0;
                 }
+                #modalTitle{
+                
+                    text-align: left;
+                    width: 100%; /* Ensures it stretches across the container */
+                    color: #212EA0;
+                    margin:0px;
+                } 
+                
+                
+                
 
                 .color-dot {
-                  width: 25px;
-                  height: 25px;
+                  width: 20px;
+                  height:20px;
                   border-radius: 50%;
                   position: relative;
                   margin-bottom:10px;
@@ -481,10 +497,10 @@ app.get('/uploads', (req, res) => {
         htmlContent += `<div class="file-item">
             <div class="file-info">
             <div class="color-dot" style="background: ${color};"></div> 
-                <strong>Unique ID:</strong> ${uniqueId} <br/>
+                <strong>Object ID:</strong> ${uniqueId} <br/>
                 <strong>File Name:</strong> ${file.name} <br/>
                 <strong>Size:</strong> ${file.size} <br/>
-                <strong>Last Modified:</strong> ${file.lastModified} <br/>
+                <strong>Uploaded Timestamp:</strong> ${file.lastModified} <br/>
             </div>
             <div class="buttons">
                 <a href="${file.path}" download class="download-btn">Download</a>
