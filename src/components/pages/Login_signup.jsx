@@ -61,6 +61,7 @@ const LoginSignup = () => {
     return true;
   };
 
+  const [showPassword, setShowPassword] = useState(false);
   const handleAuth = async () => {
     if (!validateInputs()) return;
 
@@ -70,11 +71,13 @@ const LoginSignup = () => {
       const data = isLogin ? { email, password } : { name, email, password };
       const res = await axios.post(`http://localhost:5000/${endpoint}`, data);
 
+      console.log(res);
       showAlert(isLogin ? 'Login successful!' : 'Signup successful!', 'success');
 
       // Redirect after a delay
       setTimeout(() => {
-        window.location.href = res.data.url;
+        
+        navigate("/user");
       }, 1000);
     } catch (error) {
       if (error.response) {
@@ -85,6 +88,7 @@ const LoginSignup = () => {
     } finally {
       setLoading(false);
     }
+  
   };
 
   return (
@@ -121,7 +125,18 @@ const LoginSignup = () => {
           <input type='text' className='input' placeholder='Name' value={name} onChange={e => setName(e.target.value)} />
         )}
         <input type='email' className='input' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
-        <input type='password' className='input' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+        <input type={showPassword ? "text" : "password"} className='input' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+
+        <label className='label'>
+        <input
+        className='checkbox'
+          type="checkbox"
+          checked={showPassword}
+          onChange={() => setShowPassword(!showPassword)}
+        />
+        Show Password
+      </label>
+
         {isLogin && (
         <p className="forgot-password" onClick={handleUploadClick} >Forgot Password?</p>
       )}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import './forgotpass.css';
 import { motion } from "framer-motion";
+import Backarow from '../../assets/backarrow.png';
 
 const Forgotpass = () => {
 
@@ -23,6 +24,13 @@ const Forgotpass = () => {
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+       <nav className='randomnav'>
+        <div className="background">
+          <img src={Backarow} alt="Back" id='backarrow' onClick={() => window.history.back()} />
+        </div>
+        <img src="faviconserver" alt="logo" id='website_logonav' />
+        <h1 id='website_namenav'>Nexuraa</h1>
+      </nav>
     <motion.div
       className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       initial={{ opacity: 0, y: -50 }}

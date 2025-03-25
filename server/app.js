@@ -9,6 +9,8 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
 require("dotenv").config();
+const crypto = require("crypto");
+
 
 const app = express();
 const port = 5000;
@@ -207,29 +209,7 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
 }
 
 
-app.post("/forgot-password", async (req, res) => {
-  const { email1 } = req.body;
 
-  if (!email1) {
-    return res.status(400).json({ error: "Email is required" });
-  }
-
-  try {
-    const resetLink = `http://localhost:3000/reset-password?email=${email}`;
-
-    await transporter.sendMail({
-      from: "sarthakshelke044@gmail.com",
-      to: email1,
-      subject: "Password Reset Request",
-      html: `<p>You requested a password reset. Click the link below to reset your password:</p>
-             <a href="${resetLink}" target="_blank">Reset Password</a>`,
-    });
-
-    res.json({ message: "Password reset email sent successfully!" });
-  } catch (error) {
-    res.status(500).json({ error: "Error sending email. Try again later." });
-  }
-});
 
 // Route to access the uploads folder and display files
 
@@ -602,7 +582,7 @@ app.post('/signup', async (req, res) => {
     user = new User({ name, email, password: hashedPassword });
 
     await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'User registered successfully', url: '/user' });
 
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -622,7 +602,7 @@ app.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
 
-    res.json({ message: 'Login successful', token });
+    res.json({ message: 'Login successful', token, url: '/user' });
 
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -630,22 +610,88 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.post('/reset-password', async (req, res) => {
-  const { token, password } = req.body;
 
-  const email = resetTokens[token];
-  if (!email) return res.status(400).json({ message: 'Invalid or expired token' });
+
+const resetTokens = {}; // Use a database in production
+
+// ✅ Forgot Password Endpoint
+app.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email is required" });
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const token = crypto.randomBytes(32).toString("hex");
+    resetTokens[token] = { email, expiresAt: Date.now() + 3600000 }; // Expires in 1 hour
+
+    console.log("Generated Token:", token);  // ✅ Debugging
+    console.log("resetTokens Object:", resetTokens);  // ✅ Debugging
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "sarthakshelke044@gmail.com",
+        pass: "zxnuraqbieicgxqf",
+      },
+    });
+
+    const mailOptions = {
+      from: "sarthakshelke044@gmail.com",
+      to: email,
+      subject: "Reset Your Password",
+      html: `
+        <div>
+          <h2>Password Reset Request</h2>
+          <p>Click the button below to reset your password.</p>
+          <a href="http://localhost:3000/resetpassword?token=${token}" 
+             style="background: blue; color: white; padding: 10px;">
+             Reset Password
+          </a>
+        </div>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.json({ message: "Reset link sent to your email" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to send email" });
+  }
+});
+
+app.post("/reset-password", async (req, res) => {
+  console.log("Received request body:", req.body);
+
+  const { token, password } = req.body;
+  if (!token || !password) {
+    return res.status(400).json({ message: "Token and password are required" });
+  }
+
+  console.log("Checking token:", token);
+  console.log("Stored Tokens:", resetTokens);
+
+  const email = resetTokens[token]?.email;
+  if (!email) {
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
 
   const user = await User.findOne({ email });
-  if (!user) return res.status(404).json({ message: 'User not found' });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
-  user.password = password;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  user.password = hashedPassword;
   await user.save();
 
-  delete resetTokens[token];
+  delete resetTokens[token]; // Remove token after use
 
-  res.json({ message: 'Password reset successful. You can now log in.' });
+  res.json({ message: "Password reset successful. You can now log in." });
 });
+
 
 
 

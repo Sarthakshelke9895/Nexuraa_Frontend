@@ -8,6 +8,7 @@ import Terms from './components/Terms-conditions_Privacy policy/Terms'
 import Login from './components/pages/Login_signup'
 import Forgotpass  from './components/pages/Forgotpass'
 import Resetpass from './components/pages/ResetPassword'
+import User from './components/pages/User'
  
 
 
@@ -35,6 +36,8 @@ function App(){
                     <Route path="/Login_signup" element={<Login/>} />
                     <Route path="/Forgotpass" element={<Forgotpass/>} />
                     <Route path="/ResetPassword" element={<Resetpass/>} />
+                    <Route path="/user" element={<User/>} />
+                   
 
 
                   
