@@ -645,8 +645,8 @@ app.post("/forgot-password", async (req, res) => {
         <div>
           <h2>Password Reset Request</h2>
           <p>Click the button below to reset your password.</p>
-          <a href="http://localhost:3000/resetpassword?token=${token}" 
-             style="background: blue; color: white; padding: 10px;">
+          <a href="http://nexuraa.netlify.app/resetpassword?token=${token}" 
+             style="background: blue; color: white; padding: 10px; border-radius:4px;">
              Reset Password
           </a>
         </div>

@@ -12,7 +12,7 @@ const Forgotpass = () => {
 
   const handleResetRequest = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/forgot-password", {
+      const res = await axios.post("https://server-5937.onrender.com/forgot-password", {
         email,
       });
       setMessage(res.data.message);

@@ -69,7 +69,7 @@ const LoginSignup = () => {
       setLoading(true);
       const endpoint = isLogin ? 'login' : 'signup';
       const data = isLogin ? { email, password } : { name, email, password };
-      const res = await axios.post(`http://localhost:5000/${endpoint}`, data);
+      const res = await axios.post(`https://server-5937.onrender.com/${endpoint}`, data);
 
       console.log(res);
       showAlert(isLogin ? 'Login successful!' : 'Signup successful!', 'success');
