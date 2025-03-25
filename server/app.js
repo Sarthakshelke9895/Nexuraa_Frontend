@@ -3,8 +3,8 @@ const nodemailer = require("nodemailer");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
-
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
@@ -12,6 +12,19 @@ require("dotenv").config();
 
 const app = express();
 const port = 5000;
+
+
+
+
+
+
+
+
+
+
+
+app.use(express.json());
+app.use(cors());
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true })); // Set extended option explicitly
@@ -52,6 +65,17 @@ const submissionSchema = new mongoose.Schema({
   image: { type: String, required: true },
 });
 const Submission = mongoose.model("Submission", submissionSchema);
+
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
+});
+
+// Create and export the model in the same file
+const User = mongoose.model('User', userSchema);
+module.exports = { User, userSchema };
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
@@ -181,6 +205,31 @@ function sendEmail({ email, name, contact, AppDesc, AppName }) {
     });
   });
 }
+
+
+app.post("/forgot-password", async (req, res) => {
+  const { email1 } = req.body;
+
+  if (!email1) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  try {
+    const resetLink = `http://localhost:3000/reset-password?email=${email}`;
+
+    await transporter.sendMail({
+      from: "sarthakshelke044@gmail.com",
+      to: email1,
+      subject: "Password Reset Request",
+      html: `<p>You requested a password reset. Click the link below to reset your password:</p>
+             <a href="${resetLink}" target="_blank">Reset Password</a>`,
+    });
+
+    res.json({ message: "Password reset email sent successfully!" });
+  } catch (error) {
+    res.status(500).json({ error: "Error sending email. Try again later." });
+  }
+});
 
 // Route to access the uploads folder and display files
 
@@ -542,6 +591,61 @@ app.post('/delete', (req, res) => {
 
 
 
+app.post('/signup', async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+    if (user) return res.status(400).json({ message: 'User already exists' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user = new User({ name, email, password: hashedPassword });
+
+    await user.save();
+    res.status(201).json({ message: 'User registered successfully' });
+
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Login Route
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: 'User not found' });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+
+    const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+
+    res.json({ message: 'Login successful', token });
+
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+app.post('/reset-password', async (req, res) => {
+  const { token, password } = req.body;
+
+  const email = resetTokens[token];
+  if (!email) return res.status(400).json({ message: 'Invalid or expired token' });
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  user.password = password;
+  await user.save();
+
+  delete resetTokens[token];
+
+  res.json({ message: 'Password reset successful. You can now log in.' });
+});
 
 
 

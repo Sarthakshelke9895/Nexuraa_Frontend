@@ -1,9 +1,10 @@
 /* Main card container */
+
 .app-card {
     display: flex;
     flex-direction: column; /* Keep the layout horizontal */
     width: 500px;/* Adjust width based on your design */
-    background: #ffffff;
+    
     border-radius: 12px;
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
     overflow: hidden;

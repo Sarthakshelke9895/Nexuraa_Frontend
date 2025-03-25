@@ -1,0 +1,166 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: white;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px; /* Added padding for smaller screens */
+}
+
+#toggleid {
+  margin-bottom: 20px;
+  font-size: 35px; /* Reduced font size */
+  text-align: center;
+}
+
+.auth-box {
+  background: white;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 450px; /* Ensures it doesn't exceed this width */
+}
+
+.forgot-password {
+  text-align: right;
+  padding: 10px 0px;
+}
+
+.forgot-password:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px; /* Adjusted font size */
+  background-color: #ebecfe;
+}
+
+.custom-alert {
+  position: absolute;
+  top: 10%;
+  left: 47%;
+  transform: translate(-50%, 0);
+  padding: 12px 20px;
+  font-size: 14px; /* Reduced font size */
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  text-align: center;
+  z-index: 1000;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+.button {
+  background: #3B82F6;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.button:hover {
+  background: #2563EB;
+}
+
+.button:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.checkbox-container input {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.checkbox-container label {
+  font-size: 14px;
+  color: #555;
+}
+
+.warning {
+  color: red;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.toggle {
+  color: #3B82F6;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 15px;
+}
+
+/* RESPONSIVE DESIGN FOR SMALL SCREENS (480px and below) */
+@media screen and (max-width: 480px) {
+
+  .auth-container{
+    align-items: flex-start;
+    margin-top: 100px;
+  }
+  .auth-box {
+    padding: 1rem;
+    width: 99%;border-radius: 10px;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+
+
+  
+
+   /* Ensures it fits on small screens */
+  }
+
+  #toggleid {
+    font-size: 30px;
+    margin: 0;
+    margin-top: 15px;
+    margin-bottom: 30px; /* Adjusted for small screens */
+  }
+  .custom-alert{
+    position: absolute;
+    left: 37%;
+  }
+
+  .input {
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 4px;
+  }
+
+  .button {
+    font-size: 14px;
+    padding: 10px ;
+    border-radius: 4px;
+    width: 80%;
+  }
+
+  .custom-alert {
+    font-size: 12px;
+    padding: 10px 15px;
+  }
+
+  .checkbox-container label {
+    font-size: 12px;
+  }
+}

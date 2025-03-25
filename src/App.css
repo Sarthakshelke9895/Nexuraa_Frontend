@@ -4,7 +4,8 @@
 * {
   /* Apply scrollbar styles to all elements that are scrollable */
   scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #3faffa #e0e0e0; /* For Firefox */
+  scrollbar-color: #3faffa #e0e0e0; 
+  /* For Firefox */
 }
 
 *::-webkit-scrollbar {
