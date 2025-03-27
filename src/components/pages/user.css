@@ -1,0 +1,208 @@
+.user-dashboard {
+  display: flex;
+  font-family: outfit;
+  background-color: #0056b3;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #0056b3;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  z-index: 100;
+}
+
+.user-info {
+  text-align: center;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.user-name {
+  margin: 10px 0 5px;
+}
+
+.user-email {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.logout-button {
+  width: 100%;
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: rgba(245, 108, 108, 0.854);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  border-top-left-radius: 50px;
+  background-color: #ecf0f1;
+  margin-top: 60px;
+}
+
+.heading {
+  margin-bottom: 15px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.import-button,
+.add-button {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: 0.3s ease-in;
+}
+
+.import-button {
+  background: #428dde;
+}
+
+.add-button {
+  background: #428dde;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+.import-button:hover {
+  background-color: #0056b3;
+}
+
+.projects-list {
+  margin-top: 20px;
+}
+
+.no-projects {
+  color: #888;
+}
+
+.project-item {
+  background: #ecf0f1;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+/* Custom Alert */
+.custom-alert {
+  height: 70px;
+  width: 300px;
+  position: fixed;
+  bottom: 20px;
+  left: 770px;
+  transform: translateY(-50%);
+  background: #0056b3;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  gap: 10px;
+}
+
+/* Show Alert */
+.custom-alert.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Close Button */
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  opacity: 0.7;
+}
+
+/* 🔥 RESPONSIVENESS FOR SMALL SCREENS (480px) */
+@media (max-width: 480px) {
+  .user-dashboard {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 30%;
+    height:800px;
+    margin-top: 60px;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid rgb(188, 188, 245);
+    z-index: -0;
+  }
+  .user-email{
+    font-size: 8px;
+  }
+
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+  }
+
+  .logout-button {
+    width: auto;
+    margin: 10px auto;
+  }
+
+  .main-content {
+    width: 70%;
+    margin-top: 60px;
+    padding: 15px;
+    border-top-left-radius: 4px;
+    height: 800px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .import-button,
+  .add-button {
+    width: 80%;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .custom-alert {
+    width: 90%;
+    font-size: 12px;
+    padding: 8px;
+  }
+}

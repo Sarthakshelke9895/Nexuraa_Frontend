@@ -71,7 +71,7 @@ nav ul li:hover .underline{
     transform: translateX(0);
 }
 .dark_nav{
-    background-color:#212EA0;
+    background-color:#0056b3;
     transition: 0.5s
     
 }

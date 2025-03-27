@@ -7,21 +7,20 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require("path");
 const cors = require("cors");
-const fs = require("fs");
+const fs = require('fs-extra');
+const simpleGit = require('simple-git');
+const { exec } = require('child_process');
+
+
+
 require("dotenv").config();
 const crypto = require("crypto");
 
 
+
+
 const app = express();
 const port = 5000;
-
-
-
-
-
-
-
-
 
 
 
@@ -692,9 +691,80 @@ app.post("/reset-password", async (req, res) => {
   res.json({ message: "Password reset successful. You can now log in." });
 });
 
+const REPO_DIR = path.join(__dirname, "repo"); // Local directory to clone repo
+const ANDROID_LOCATIONS = ["android", "app/android", "mobile/android"]; // Possible locations for android folder
 
+app.post("/build-apk", async (req, res) => {
+  const { githubRepo } = req.body;
 
+  if (!githubRepo) {
+    return res.status(400).json({ error: "GitHub repo URL is required" });
+  }
 
+  try {
+    // ✅ Step 1: Remove existing repo folder if it exists
+    if (fs.existsSync(REPO_DIR)) {
+      console.log("🔄 Deleting existing repo...");
+      fs.rmSync(REPO_DIR, { recursive: true, force: true });
+    }
+
+    // ✅ Step 2: Clone the repository
+    console.log("📥 Cloning repository...");
+    await simpleGit().clone(githubRepo, REPO_DIR);
+
+    // ✅ Step 3: Debugging - Print repo structure
+    console.log("📂 Repo Directory Structure:");
+    console.log(fs.readdirSync(REPO_DIR).join("\n"));
+
+    // ✅ Step 4: Locate the Android directory
+    let ANDROID_DIR = null;
+    for (const location of ANDROID_LOCATIONS) {
+      const fullPath = path.join(REPO_DIR, location);
+      if (fs.existsSync(fullPath)) {
+        ANDROID_DIR = fullPath;
+        break;
+      }
+    }
+
+    if (!ANDROID_DIR) {
+      console.error("❌ Error: 'android' directory not found in the cloned repository.");
+      return res.status(500).json({ error: "'android' directory not found in the repo." });
+    }
+
+    console.log(`📂 Android directory found at: ${ANDROID_DIR}`);
+
+    // ✅ Step 5: Set Gradle command based on OS
+    const gradleCommand =
+      process.platform === "win32"
+        ? `cd "${ANDROID_DIR}" && gradlew.bat assembleDebug`
+        : `cd "${ANDROID_DIR}" && ./gradlew assembleDebug`;
+
+    console.log("⚙️ Building APK...");
+
+    // ✅ Step 6: Run the Gradle build command
+    exec(gradleCommand, { shell: true }, (err, stdout, stderr) => {
+      if (err) {
+        console.error("❌ Build failed:", stderr);
+        return res.status(500).json({ error: "Build failed", details: stderr });
+      }
+
+      console.log("✅ Build successful:", stdout);
+
+      // ✅ Step 7: Check if APK was generated
+      const APK_PATH = path.join(ANDROID_DIR, "app", "build", "outputs", "apk", "debug", "app-debug.apk");
+      if (!fs.existsSync(APK_PATH)) {
+        console.error("❌ Build successful, but APK not found!");
+        return res.status(500).json({ error: "APK not found after build." });
+      }
+
+      console.log(`📦 APK generated at: ${APK_PATH}`);
+      res.json({ message: "APK built successfully!", apkPath: APK_PATH });
+    });
+  } catch (error) {
+    console.error("❌ Error:", error);
+    res.status(500).json({ error: "Failed to build APK", details: error.message });
+  }
+});
 
 app.get("/", (req, res) => {
   sendEmail(req.query)
