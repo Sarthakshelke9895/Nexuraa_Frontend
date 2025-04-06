@@ -6,6 +6,8 @@
 
 /* Sidebar */
 .sidebar {
+  margin-top:60px;
+  border-top: 1px solid rgb(188, 188, 245);
   width: 250px;
   background: #0056b3;
   color: white;
@@ -36,7 +38,7 @@
 
 .logout-button {
   width: 100%;
-  background: red;
+  background: rgb(255, 54, 54);
   color: white;
   border: none;
   padding: 10px;
@@ -46,14 +48,14 @@
 }
 
 .logout-button:hover {
-  background-color: rgba(245, 108, 108, 0.854);
+  background-color: rgb(255, 0, 0);
 }
 
 /* Main Content */
 .main-content {
   flex: 1;
   padding: 20px;
-  border-top-left-radius: 50px;
+  border-top-left-radius: 8px;
   background-color: #ecf0f1;
   margin-top: 60px;
 }
@@ -109,31 +111,40 @@
   border-radius: 5px;
 }
 
-/* Custom Alert */
 .custom-alert {
-  height: 70px;
-  width: 300px;
   position: fixed;
-  bottom: 20px;
-  left: 770px;
-  transform: translateY(-50%);
+  top:10px; /* Start offscreen (above the viewport) */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Ensure it's centered horizontally */
   background: #0056b3;
   color: white;
-  padding: 12px 20px;
+  padding: 15px 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.4s ease;
   display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   gap: 10px;
+  z-index: 1000;
 }
 
-/* Show Alert */
+/* Slide Down Animation */
+@keyframes slideDown {
+  0% {
+    top: -200px; /* Start offscreen */
+    opacity: 0;
+  }
+  100% {
+    top: 70px; /* End position (you can adjust this to your desired position) */
+    opacity: 1;
+  }
+}
+
+/* Show Alert with Slide Down Effect */
 .custom-alert.show {
-  opacity: 1;
-  transform: translateY(0);
+  animation: slideDown 0.5s forwards; /* Apply the slide down animation */
 }
 
 /* Close Button */
@@ -201,7 +212,7 @@
   }
 
   .custom-alert {
-    width: 90%;
+    width: 60%;
     font-size: 12px;
     padding: 8px;
   }

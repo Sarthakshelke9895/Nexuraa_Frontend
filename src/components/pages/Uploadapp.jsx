@@ -116,9 +116,9 @@ const Uploadapp = () => {
 
       {/* Custom Alert */}
       {showAlert && (
-        <div className="custom-alert">
+        <div className="custom-alertupload">
           <span>No App found.</span>
-          <button onClick={() => setShowAlert(false)} className="close-alert">
+          <button onClick={() => setShowAlert(false)} className="close-alertupload">
             &times;
           </button>
         </div>

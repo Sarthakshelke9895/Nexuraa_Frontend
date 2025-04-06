@@ -45,7 +45,7 @@
   background-color: #ebecfe;
 }
 
-.custom-alert {
+.custom-alertlogin {
   position: absolute;
   top: 10%;
   left: 46%;
@@ -150,9 +150,11 @@
     margin-top: 15px;
     margin-bottom: 30px; /* Adjusted for small screens */
   }
-  .custom-alert{
-    position: absolute;
-    left: 36%;
+  .custom-alertlogin{
+    position: fixed;
+   left: 30%;
+    background-color: #212EA0;
+    letter-spacing: 0.8px;
   }
 
   .input {

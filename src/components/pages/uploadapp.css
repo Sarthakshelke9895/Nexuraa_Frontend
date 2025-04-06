@@ -18,7 +18,7 @@
 
 /*Custom alert */
 /* Custom alert styling */
-.custom-alert {
+.custom-alertupload {
   position: fixed;
   top: -100px; /* Start offscreen */
   left: 50%;
@@ -33,10 +33,10 @@
   font-size: 18px;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  animation: slideDown 4s forwards;
+  animation: slideDown2 4s forwards;
 }
 
-.custom-alert .close-alert {
+.custom-alertupload .close-alertupload {
   background: none;
   border: none;
   color: #fff;
@@ -45,7 +45,7 @@
 }
 
 /* Slide down animation */
-@keyframes slideDown {
+@keyframes slideDown2 {
   0% {
     top: -100px;
     opacity: 0;
@@ -409,9 +409,9 @@
         color: #272424;
     }
     
-    .custom-alert{
+    .custom-alertupload{
         font-size: 14px;
-        padding: 10px 15px;
+        padding: 8px 16px;
     }
     .custom-alert .close-alert{
         font-size: 18px;

@@ -20,7 +20,7 @@ const Hero = () => {
          
             <h1>Host your Mobile Application Online for Free</h1>
             <p>Providing a User-Friendly Hosting Platform to Host your Apps Free of Cost</p>
-            <button id='upload_btn' onClick={handleUploadClick}>Sign in to Upload App</button>
+            <button id='upload_btn' onClick={handleUploadClick}>Sign in to Proceed</button>
           </div>
          </div> 
   )

@@ -81,7 +81,7 @@ const LoginSignup = () => {
       }, 1000);
     } catch (error) {
       if (error.response) {
-        showAlert(`${error.response.data.error || 'Something went wrong!'}`, 'error');
+        showAlert(`${error.response.data.error || 'Incorrect Password!'}`, 'error');
       } else {
         showAlert('Server error! Try again later.', 'error');
       }
@@ -103,7 +103,7 @@ const LoginSignup = () => {
 
       {alert.message && (
         <motion.div 
-          className={`custom-alert ${alert.type}`} 
+          className={`custom-alertlogin ${alert.type}`} 
           initial={{ opacity: 0, y: -20 }} 
           animate={{ opacity: 1, y: 0 }} 
           exit={{ opacity: 0, y: -20 }} 

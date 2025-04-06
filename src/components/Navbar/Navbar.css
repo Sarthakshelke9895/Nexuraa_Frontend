@@ -71,8 +71,13 @@ nav ul li:hover .underline{
     transform: translateX(0);
 }
 .dark_nav{
-    background-color:#0056b3;
-    transition: 0.5s
+    background-color:  #212ea0d5; /* Semi-transparent background */
+    backdrop-filter: blur(8px); /* Apply blur to the content behind the element */
+    transition: 0.5s; /* Smooth transition for the background and blur effect */
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px; /* Optional: rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+
     
 }
 #contactbutton{
@@ -121,31 +126,40 @@ nav ul li:hover .underline{
         width: 225px;
     }
     nav ul{
-        position:fixed;
+        position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
-        z-index: -1;
-        width: 300px;
-        padding-top: 70px;
-        transition: 0.5s;
-        background-color: #212EA0;
+        z-index: 1000; /* Ensure it appears above other content */
+        width: 100%; 
+        height:fit-content;/* Adjust as per your design */
+        background-color: #212ea0d5;  /* Semi-transparent background */
+        backdrop-filter: blur(10px); /* Glass effect */
+        border-top-left-radius: 10px; /* Rounded top-left corner */
+        border-bottom-left-radius: 10px; /* Rounded bottom-left corner */
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Shadow for better visibility */
+        transition: 0.5s ease-in-out; /* Smooth transition for sliding */
+        transform: translateX(385px);
+        margin-top: 90px;
+         /* Start off-screen on the right */
     }
     nav ul li{
         display: block;
-        margin: 25px 40px;
-        font-size: 25px;
+        margin: 25px 20px;
+        font-size: 28px;
     }
     .menu-icon{
         display: block;
-        width: 40px;
+        width: 45px;
         cursor: pointer;
     }
     .button{
         padding: 10px 12px;
     }
     .hide_mobile_menu{
-      right: -300px;
+      right: -100%;
+      
+      
     }
     #website_logo{
         width: 60px;
@@ -157,10 +171,12 @@ nav ul li:hover .underline{
     }
     #contactbutton{
         background-color: rgb(255, 255, 255);
-        padding: 10px 20px;
         border-radius: 8px;
         color: #212EA0;
         z-index: 200;
+        width: fit-content;
+        padding: 10px 50px;
+     
     }
     #searchnav{
         color:white;
